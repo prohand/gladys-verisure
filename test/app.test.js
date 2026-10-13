@@ -128,8 +128,11 @@ test('the code steps: test, send, validate', async (t) => {
 
   const tested = await gladys.fake.action('test_connection');
   assert.match(tested.data.message.fr, /Envoyer un code/);
+  assert.match(tested.data.message.de, /Code senden/);
+  assert.match(tested.data.message.es, /Enviar un código/);
   const sent = await gladys.fake.action('send_code');
   assert.match(sent.data.message.fr, /SMS \(\*+789\)/);
+  assert.match(sent.data.message.de, /SMS gesendet \(\*+789\)/);
   const validated = await gladys.fake.action('validate_code', { code: '123 456' });
   assert.match(validated.data.message.fr, /Code accepté/);
   assert.deepEqual(gladys.fake.connectionStatus, { connected: true });
@@ -147,6 +150,8 @@ test('test_connection lists the installations and their mode', async (t) => {
   const { gladys } = await start(t);
   const ack = await gladys.fake.action('test_connection');
   assert.equal(ack.data.message.fr, 'Connecté : Maison (Désarmée).');
+  assert.equal(ack.data.message.de, 'Verbunden: Maison (Unscharf).');
+  assert.equal(ack.data.message.es, 'Conectado: Maison (Desconectada).');
 });
 
 test('new credentials make a new client and a new read', async (t) => {

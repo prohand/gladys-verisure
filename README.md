@@ -7,7 +7,8 @@ follow the detectors, and use them in scenes and on the dashboard.
 > Unofficial: this project is not affiliated with Verisure. It uses the APIs of
 > the Verisure apps, which Verisure can change without notice.
 
-User documentation: [English](docs/en.md) · [Français](docs/fr.md).
+User documentation: [English](docs/en.md) · [Français](docs/fr.md) · [Deutsch](docs/de.md) ·
+[Español](docs/es.md).
 
 ## Features
 
@@ -77,7 +78,7 @@ Gladys  <── SDK ──>  src/app.js  ──>  src/hub.js  ──>  src/veris
 │  ├─ store.js                       # session file in /data
 │  ├─ logging.js                     # "Detailed logs" switch
 │  └─ config.js                      # defaults + normalization
-├─ docs/en.md, docs/fr.md            # user documentation (re-hosted by Gladys)
+├─ docs/{en,fr,de,es}.md             # user documentation (re-hosted by Gladys)
 ├─ test/                             # node --test, fake Verisure clouds, fake Gladys
 ├─ gladys-assistant-integration.json # manifest
 ├─ Dockerfile                        # Node 24 Alpine, non-root, read-only rootfs ready

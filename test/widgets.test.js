@@ -83,7 +83,10 @@ test('a button arms the alarm and answers a short toast', async () => {
   });
   assert.equal(client.state.alarm.mode, MODES.ARMED_AWAY);
   assert.equal(changed, 1);
-  assert.ok(toast.en.length <= 200 && toast.fr.length <= 200);
+  for (const language of ['en', 'fr', 'de', 'es']) {
+    assert.ok(toast[language].length <= 200, language);
+  }
+  assert.equal(toast.de, 'Alarmanlage: Vollscharf');
 });
 
 test('disarming is refused when the instance does not allow it', async () => {
@@ -124,4 +127,7 @@ test('ago() says how long ago, in the viewer language', () => {
   assert.equal(ago('2026-10-13T09:55:00Z', 'en', now), '5 minutes ago');
   assert.equal(ago('2026-10-13T07:00:00Z', 'fr', now), 'il y a 3 heures');
   assert.equal(ago(null, 'fr', now), '—');
+  assert.match(ago('2026-10-13T09:55:00Z', 'de', now), /vor 5 Minuten/);
+  assert.match(ago('2026-10-13T09:55:00Z', 'es', now), /hace 5 minutos/);
+  assert.equal(ago('2026-10-13T09:55:00Z', 'it', now), '5 minutes ago');
 });

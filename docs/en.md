@@ -56,7 +56,8 @@ lost** trigger.
 
 ## Devices
 
-Once connected, open the **Discovery** tab and add the devices:
+Once connected, open the **Discover** tab and add the devices with
+**Add to Gladys**:
 
 - **Verisure _installation name_**: the **alarm mode**, a select. The modes
   offered are the ones of your panel: Disarmed, Partial (day), Partial (night)
@@ -106,10 +107,10 @@ night), `armed_away` (total), `perimeter`, `armed_home_perimeter`,
 
 ## Dashboard
 
-Add the **Verisure alarm** widget: alarm mode (green disarmed, orange partial,
-red total), last change (who, how long ago), open doors and windows,
-connection, temperature, and buttons to arm (every tap asks for a
-confirmation).
+In **Dashboard → Edit → New widget**, add the **Verisure alarm** widget: alarm
+mode (green disarmed, orange partial, red total), last change (who, how long
+ago), open doors and windows, connection, temperature, and buttons to arm (every
+tap asks for a confirmation).
 
 The **Disarm** button only shows when you tick **Show a Disarm button** in the
 widget settings. Beware: anyone who sees that dashboard can then disarm your

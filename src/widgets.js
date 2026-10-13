@@ -17,7 +17,8 @@ import { climateIds } from './devices/climate.js';
 import { resolveInstallation } from './devices/index.js';
 import { STATUS, STATUS_MESSAGES } from './hub.js';
 import { ArmingRefusedError } from './verisure/errors.js';
-import { MODE_LABELS, MODES, UNKNOWN_MODE, isKnownMode } from './verisure/modes.js';
+import { supportedLanguage, textsOf } from './i18n.js';
+import { MODE_LABELS, MODES, UNKNOWN_MODE, isKnownMode, modeLabel } from './verisure/modes.js';
 
 const logger = createLogger({ name: 'widgets' });
 
@@ -37,25 +38,25 @@ const MODE_COLORS = {
 const BUTTONS = [
   {
     mode: MODES.ARMED_HOME,
-    label: { en: 'Partial', fr: 'Partielle' },
+    label: { en: 'Partial', fr: 'Partielle', de: 'Teilscharf', es: 'Parcial' },
     icon: 'shield',
     style: 'secondary',
   },
   {
     mode: MODES.ARMED_NIGHT,
-    label: { en: 'Night', fr: 'Nuit' },
+    label: { en: 'Night', fr: 'Nuit', de: 'Nacht', es: 'Noche' },
     icon: 'moon',
     style: 'secondary',
   },
   {
     mode: MODES.ARMED_AWAY,
-    label: { en: 'Total', fr: 'Totale' },
+    label: { en: 'Total', fr: 'Totale', de: 'Vollscharf', es: 'Total' },
     icon: 'lock',
     style: 'primary',
   },
   {
     mode: MODES.DISARMED,
-    label: { en: 'Disarm', fr: 'Désarmer' },
+    label: { en: 'Disarm', fr: 'Désarmer', de: 'Unscharf schalten', es: 'Desconectar' },
     icon: 'unlock',
     style: 'danger',
   },
@@ -68,7 +69,7 @@ export function ago(isoDate, language = 'en', now = Date.now()) {
     return '—';
   }
   const minutes = Math.max(0, Math.round((now - time) / 60_000));
-  const format = new Intl.RelativeTimeFormat(language === 'fr' ? 'fr' : 'en', { numeric: 'auto' });
+  const format = new Intl.RelativeTimeFormat(supportedLanguage(language), { numeric: 'auto' });
   if (minutes < 60) {
     return format.format(-minutes, 'minute');
   }
@@ -78,26 +79,53 @@ export function ago(isoDate, language = 'en', now = Date.now()) {
   return format.format(-Math.round(minutes / 1440), 'day');
 }
 
+const CLOUD_LABEL = {
+  en: 'Verisure cloud',
+  fr: 'Cloud Verisure',
+  de: 'Verisure-Cloud',
+  es: 'Nube Verisure',
+};
+
 function connectionRow(hub) {
   if (hub.status === STATUS.OK) {
     return {
-      label: { en: 'Verisure cloud', fr: 'Cloud Verisure' },
+      label: CLOUD_LABEL,
       icon: 'cloud',
-      value: { en: 'Connected', fr: 'Connecté' },
+      value: { en: 'Connected', fr: 'Connecté', de: 'Verbunden', es: 'Conectado' },
       color: WIDGET_COLORS.SUCCESS,
     };
   }
   const short = {
-    [STATUS.MFA_REQUIRED]: { en: 'Code required', fr: 'Code requis' },
-    [STATUS.AUTH_FAILED]: { en: 'Login refused', fr: 'Connexion refusée' },
-    [STATUS.RATE_LIMITED]: { en: 'Throttled', fr: 'Limité' },
-    [STATUS.UNREACHABLE]: { en: 'Unreachable', fr: 'Injoignable' },
-    [STATUS.NOT_CONFIGURED]: { en: 'Not configured', fr: 'Non configuré' },
+    [STATUS.MFA_REQUIRED]: {
+      en: 'Code required',
+      fr: 'Code requis',
+      de: 'Code erforderlich',
+      es: 'Código requerido',
+    },
+    [STATUS.AUTH_FAILED]: {
+      en: 'Login refused',
+      fr: 'Connexion refusée',
+      de: 'Anmeldung verweigert',
+      es: 'Inicio de sesión rechazado',
+    },
+    [STATUS.RATE_LIMITED]: { en: 'Throttled', fr: 'Limité', de: 'Gedrosselt', es: 'Limitado' },
+    [STATUS.UNREACHABLE]: {
+      en: 'Unreachable',
+      fr: 'Injoignable',
+      de: 'Nicht erreichbar',
+      es: 'Inaccesible',
+    },
+    [STATUS.NOT_CONFIGURED]: {
+      en: 'Not configured',
+      fr: 'Non configuré',
+      de: 'Nicht konfiguriert',
+      es: 'Sin configurar',
+    },
   }[hub.status];
   return {
-    label: { en: 'Verisure cloud', fr: 'Cloud Verisure' },
+    label: CLOUD_LABEL,
     icon: 'cloud-off',
-    value: short ?? { en: 'Unknown', fr: 'Inconnu' },
+    value: short ?? MODE_LABELS[UNKNOWN_MODE],
     color: hub.status === STATUS.RATE_LIMITED ? WIDGET_COLORS.WARNING : WIDGET_COLORS.DANGER,
   };
 }
@@ -106,6 +134,8 @@ function emptyContent(hub) {
   const message = STATUS_MESSAGES[hub.status] ?? {
     en: 'Choose the alarm in the widget settings.',
     fr: "Choisissez l'alarme dans les réglages du widget.",
+    de: 'Wähle die Alarmanlage in den Widget-Einstellungen.',
+    es: 'Elija la alarma en la configuración del widget.',
   };
   return {
     ttl_seconds: 60,
@@ -127,7 +157,7 @@ export const WIDGETS = {
       const mode = snapshot.alarm?.mode ?? UNKNOWN_MODE;
       const items = [
         {
-          label: { en: 'Alarm', fr: 'Alarme' },
+          label: { en: 'Alarm', fr: 'Alarme', de: 'Alarmanlage', es: 'Alarma' },
           icon: mode === MODES.DISARMED ? 'unlock' : 'shield',
           value: MODE_LABELS[mode] ?? MODE_LABELS[UNKNOWN_MODE],
           color:
@@ -135,7 +165,12 @@ export const WIDGETS = {
             (isKnownMode(mode) ? WIDGET_COLORS.WARNING : WIDGET_COLORS.NEUTRAL),
         },
         {
-          label: { en: 'Last change', fr: 'Dernier changement' },
+          label: {
+            en: 'Last change',
+            fr: 'Dernier changement',
+            de: 'Letzte Änderung',
+            es: 'Último cambio',
+          },
           icon: 'clock',
           value: [snapshot.alarm?.changedBy, ago(snapshot.alarm?.changedAt, language)]
             .filter(Boolean)
@@ -147,11 +182,21 @@ export const WIDGETS = {
       if (snapshot.doorWindows.length > 0) {
         const open = snapshot.doorWindows.filter((item) => item.open);
         items.push({
-          label: { en: 'Doors & windows', fr: 'Portes et fenêtres' },
+          label: {
+            en: 'Doors & windows',
+            fr: 'Portes et fenêtres',
+            de: 'Türen & Fenster',
+            es: 'Puertas y ventanas',
+          },
           icon: 'home',
           value:
             open.length === 0
-              ? { en: 'All closed', fr: 'Tout est fermé' }
+              ? {
+                  en: 'All closed',
+                  fr: 'Tout est fermé',
+                  de: 'Alles geschlossen',
+                  es: 'Todo cerrado',
+                }
               : open
                   .map((item) => item.name)
                   .join(', ')
@@ -214,16 +259,17 @@ export const WIDGETS = {
       try {
         const { mode } = await hub.setAlarmMode(params.installation, wanted);
         await onChange?.();
-        return {
-          en: `Alarm: ${MODE_LABELS[mode].en}`,
-          fr: `Alarme : ${MODE_LABELS[mode].fr}`,
-        };
+        const prefix = { en: 'Alarm: ', fr: 'Alarme : ', de: 'Alarmanlage: ', es: 'Alarma: ' };
+        return textsOf((language) => `${prefix[language]}${modeLabel(mode, language)}`);
       } catch (err) {
         if (err instanceof ArmingRefusedError) {
-          return {
-            en: `Not armed: ${err.message}`.slice(0, 200),
-            fr: `Non armée : ${err.message}`.slice(0, 200),
+          const prefix = {
+            en: 'Not armed: ',
+            fr: 'Non armée : ',
+            de: 'Nicht scharf geschaltet: ',
+            es: 'No conectada: ',
           };
+          return textsOf((language) => `${prefix[language]}${err.message}`.slice(0, 200));
         }
         throw err;
       }

@@ -8,6 +8,8 @@
 // scenes: a published key is never renamed.
 // -----------------------------------------------------------------------------
 
+import { localize } from '../i18n.js';
+
 export const MODES = {
   DISARMED: 'disarmed',
   // Partial, day: the perimeter of the living areas ("Partiel" in the app).
@@ -40,21 +42,45 @@ export const MODE_ORDER = [
 ];
 
 export const MODE_LABELS = {
-  [MODES.DISARMED]: { en: 'Disarmed', fr: 'Désarmée' },
-  [MODES.ARMED_HOME]: { en: 'Partial (day)', fr: 'Partielle (jour)' },
-  [MODES.ARMED_NIGHT]: { en: 'Partial (night)', fr: 'Partielle (nuit)' },
-  [MODES.ARMED_AWAY]: { en: 'Total', fr: 'Totale' },
-  [MODES.PERIMETER]: { en: 'Perimeter only', fr: 'Périmétrique seule' },
+  [MODES.DISARMED]: { en: 'Disarmed', fr: 'Désarmée', de: 'Unscharf', es: 'Desconectada' },
+  [MODES.ARMED_HOME]: {
+    en: 'Partial (day)',
+    fr: 'Partielle (jour)',
+    de: 'Teilscharf (Tag)',
+    es: 'Parcial (día)',
+  },
+  [MODES.ARMED_NIGHT]: {
+    en: 'Partial (night)',
+    fr: 'Partielle (nuit)',
+    de: 'Teilscharf (Nacht)',
+    es: 'Parcial (noche)',
+  },
+  [MODES.ARMED_AWAY]: { en: 'Total', fr: 'Totale', de: 'Vollscharf', es: 'Total' },
+  [MODES.PERIMETER]: {
+    en: 'Perimeter only',
+    fr: 'Périmétrique seule',
+    de: 'Nur Perimeter',
+    es: 'Solo perimetral',
+  },
   [MODES.ARMED_HOME_PERIMETER]: {
     en: 'Partial (day) + perimeter',
     fr: 'Partielle (jour) + périm.',
+    de: 'Teilscharf (Tag) + Perimeter',
+    es: 'Parcial (día) + perimetral',
   },
   [MODES.ARMED_NIGHT_PERIMETER]: {
     en: 'Partial (night) + perimeter',
     fr: 'Partielle (nuit) + périm.',
+    de: 'Teilscharf (Nacht) + Perimeter',
+    es: 'Parcial (noche) + perimetral',
   },
-  [MODES.ARMED_AWAY_PERIMETER]: { en: 'Total + perimeter', fr: 'Totale + périmétrique' },
-  [UNKNOWN_MODE]: { en: 'Unknown', fr: 'Inconnu' },
+  [MODES.ARMED_AWAY_PERIMETER]: {
+    en: 'Total + perimeter',
+    fr: 'Totale + périmétrique',
+    de: 'Vollscharf + Perimeter',
+    es: 'Total + perimetral',
+  },
+  [UNKNOWN_MODE]: { en: 'Unknown', fr: 'Inconnu', de: 'Unbekannt', es: 'Desconocido' },
 };
 
 /**
@@ -63,8 +89,7 @@ export const MODE_LABELS = {
  * @param {string} [language]
  */
 export function modeLabel(mode, language = 'en') {
-  const labels = MODE_LABELS[mode] ?? MODE_LABELS[UNKNOWN_MODE];
-  return labels[language] ?? labels.en;
+  return localize(MODE_LABELS[mode] ?? MODE_LABELS[UNKNOWN_MODE], language);
 }
 
 export function isKnownMode(mode) {
