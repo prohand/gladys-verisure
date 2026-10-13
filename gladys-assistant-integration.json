@@ -6,8 +6,8 @@
     "en": "Arm, disarm and follow your Verisure alarm, its detectors and sensors from Gladys.",
     "fr": "Armez, désarmez et suivez votre alarme Verisure, ses détecteurs et capteurs depuis Gladys."
   },
-  "version": "1.0.0",
-  "docker_image": "ghcr.io/prohand/gladys-verisure:1.0.0",
+  "version": "1.0.1",
+  "docker_image": "ghcr.io/prohand/gladys-verisure:1.0.1",
   "gladys_version": ">=5.1.0",
   "cover_image": "https://raw.githubusercontent.com/prohand/gladys-verisure/main/cover.png",
   "categories": ["security"],
@@ -16,7 +16,10 @@
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Getting started",
+        "fr": "Pour commencer"
+      },
       "description": {
         "en": "Use the login of your Verisure app. Two Verisure clouds exist: \"My Verisure\" (France, Spain, Italy, Portugal, United Kingdom, Ireland, Latin America) and \"Verisure\" (Nordics, Benelux, Germany...). The first connection asks for a code sent by SMS or e-mail: save, click \"Send a code\", then type it in \"Validate the code\".",
         "fr": "Utilisez l'identifiant de votre application Verisure. Il existe deux clouds Verisure : « My Verisure » (France, Espagne, Italie, Portugal, Royaume-Uni, Irlande, Amérique latine) et « Verisure » (pays nordiques, Benelux, Allemagne…). La première connexion demande un code envoyé par SMS ou e-mail : enregistrez, cliquez sur « Envoyer un code », puis saisissez-le dans « Valider le code »."
@@ -24,18 +27,27 @@
       "links": [
         {
           "url": "https://customers.securitasdirect.fr",
-          "label": { "en": "My Verisure (France)", "fr": "My Verisure (France)" }
+          "label": {
+            "en": "My Verisure (France)",
+            "fr": "My Verisure (France)"
+          }
         },
         {
           "url": "https://mypages.verisure.com",
-          "label": { "en": "Verisure My Pages", "fr": "Verisure My Pages" }
+          "label": {
+            "en": "Verisure My Pages",
+            "fr": "Verisure My Pages"
+          }
         }
       ]
     },
     {
       "key": "platform",
       "type": "select",
-      "label": { "en": "Verisure app", "fr": "Application Verisure" },
+      "label": {
+        "en": "Verisure app",
+        "fr": "Application Verisure"
+      },
       "description": {
         "en": "The app you use to drive your alarm.",
         "fr": "L'application qui pilote votre alarme."
@@ -62,7 +74,10 @@
     {
       "key": "country",
       "type": "select",
-      "label": { "en": "Country (My Verisure)", "fr": "Pays (My Verisure)" },
+      "label": {
+        "en": "Country (My Verisure)",
+        "fr": "Pays (My Verisure)"
+      },
       "description": {
         "en": "Country of your contract. Only used by the My Verisure app.",
         "fr": "Pays de votre contrat. Utilisé seulement par l'application My Verisure."
@@ -70,39 +85,111 @@
       "required": false,
       "default": "FR",
       "options": [
-        { "value": "FR", "label": { "en": "France", "fr": "France" } },
-        { "value": "ES", "label": { "en": "Spain", "fr": "Espagne" } },
-        { "value": "IT", "label": { "en": "Italy", "fr": "Italie" } },
-        { "value": "PT", "label": { "en": "Portugal", "fr": "Portugal" } },
-        { "value": "GB", "label": { "en": "United Kingdom", "fr": "Royaume-Uni" } },
-        { "value": "IE", "label": { "en": "Ireland", "fr": "Irlande" } },
-        { "value": "AR", "label": { "en": "Argentina", "fr": "Argentine" } },
-        { "value": "BR", "label": { "en": "Brazil", "fr": "Brésil" } },
-        { "value": "CL", "label": { "en": "Chile", "fr": "Chili" } },
-        { "value": "PE", "label": { "en": "Peru", "fr": "Pérou" } }
+        {
+          "value": "FR",
+          "label": {
+            "en": "France",
+            "fr": "France"
+          }
+        },
+        {
+          "value": "ES",
+          "label": {
+            "en": "Spain",
+            "fr": "Espagne"
+          }
+        },
+        {
+          "value": "IT",
+          "label": {
+            "en": "Italy",
+            "fr": "Italie"
+          }
+        },
+        {
+          "value": "PT",
+          "label": {
+            "en": "Portugal",
+            "fr": "Portugal"
+          }
+        },
+        {
+          "value": "GB",
+          "label": {
+            "en": "United Kingdom",
+            "fr": "Royaume-Uni"
+          }
+        },
+        {
+          "value": "IE",
+          "label": {
+            "en": "Ireland",
+            "fr": "Irlande"
+          }
+        },
+        {
+          "value": "AR",
+          "label": {
+            "en": "Argentina",
+            "fr": "Argentine"
+          }
+        },
+        {
+          "value": "BR",
+          "label": {
+            "en": "Brazil",
+            "fr": "Brésil"
+          }
+        },
+        {
+          "value": "CL",
+          "label": {
+            "en": "Chile",
+            "fr": "Chili"
+          }
+        },
+        {
+          "value": "PE",
+          "label": {
+            "en": "Peru",
+            "fr": "Pérou"
+          }
+        }
       ]
     },
     {
       "key": "username",
       "type": "string",
-      "label": { "en": "Username", "fr": "Identifiant" },
+      "label": {
+        "en": "Username",
+        "fr": "Identifiant"
+      },
       "description": {
         "en": "The login of your Verisure app (e-mail or customer number).",
         "fr": "L'identifiant de votre application Verisure (e-mail ou numéro client)."
       },
-      "placeholder": { "en": "e.g. john@example.com", "fr": "ex. jean@exemple.fr" },
+      "placeholder": {
+        "en": "e.g. john@example.com",
+        "fr": "ex. jean@exemple.fr"
+      },
       "required": true
     },
     {
       "key": "password",
       "type": "secret",
-      "label": { "en": "Password", "fr": "Mot de passe" },
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe"
+      },
       "required": true
     },
     {
       "key": "alarm_code",
       "type": "secret",
-      "label": { "en": "Alarm code", "fr": "Code de l'alarme" },
+      "label": {
+        "en": "Alarm code",
+        "fr": "Code de l'alarme"
+      },
       "description": {
         "en": "Verisure app only: the code that arms and disarms the alarm and drives the locks. My Verisure does not need it.",
         "fr": "Application Verisure seulement : le code qui arme et désarme l'alarme et pilote les serrures. My Verisure n'en a pas besoin."
@@ -112,7 +199,10 @@
     {
       "key": "poll_interval",
       "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
+      "label": {
+        "en": "Refresh interval (s)",
+        "fr": "Intervalle de rafraîchissement (s)"
+      },
       "description": {
         "en": "How often Verisure is read, in seconds. Verisure blocks accounts that ask too often: keep 120 or more.",
         "fr": "Fréquence de lecture de Verisure, en secondes. Verisure bloque les comptes trop bavards : gardez 120 ou plus."
@@ -125,7 +215,10 @@
     {
       "key": "debug_logs",
       "type": "boolean",
-      "label": { "en": "Detailed logs", "fr": "Logs détaillés" },
+      "label": {
+        "en": "Detailed logs",
+        "fr": "Logs détaillés"
+      },
       "description": {
         "en": "Log every exchange with Verisure (no password, no token), to diagnose a problem.",
         "fr": "Journalise chaque échange avec Verisure (sans mot de passe ni jeton), pour diagnostiquer un problème."
@@ -137,31 +230,49 @@
   "actions": [
     {
       "key": "test_connection",
-      "label": { "en": "Test the connection", "fr": "Tester la connexion" },
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion"
+      },
       "timeout_seconds": 60
     },
     {
       "key": "send_code",
-      "label": { "en": "Send a code", "fr": "Envoyer un code" },
+      "label": {
+        "en": "Send a code",
+        "fr": "Envoyer un code"
+      },
       "timeout_seconds": 30
     },
     {
       "key": "validate_code",
-      "label": { "en": "Validate the code", "fr": "Valider le code" },
+      "label": {
+        "en": "Validate the code",
+        "fr": "Valider le code"
+      },
       "timeout_seconds": 60,
       "fields": [
         {
           "key": "code",
           "type": "string",
-          "label": { "en": "Code received", "fr": "Code reçu" },
-          "placeholder": { "en": "e.g. 123456", "fr": "ex. 123456" },
+          "label": {
+            "en": "Code received",
+            "fr": "Code reçu"
+          },
+          "placeholder": {
+            "en": "e.g. 123456",
+            "fr": "ex. 123456"
+          },
           "required": true
         }
       ]
     },
     {
       "key": "forget_session",
-      "label": { "en": "Forget the session", "fr": "Oublier la session" },
+      "label": {
+        "en": "Forget the session",
+        "fr": "Oublier la session"
+      },
       "timeout_seconds": 30
     }
   ],
@@ -181,51 +292,103 @@
           "key": "device",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Alarm", "fr": "Alarme" },
+          "label": {
+            "en": "Alarm",
+            "fr": "Alarme"
+          },
           "required": false
         },
         {
           "key": "mode",
           "type": "multi_select",
-          "label": { "en": "New mode", "fr": "Nouveau mode" },
+          "label": {
+            "en": "New mode",
+            "fr": "Nouveau mode"
+          },
           "options": [
-            { "value": "disarmed", "label": { "en": "Disarmed", "fr": "Désarmée" } },
-            { "value": "armed_home", "label": { "en": "Partial (day)", "fr": "Partielle (jour)" } },
+            {
+              "value": "disarmed",
+              "label": {
+                "en": "Disarmed",
+                "fr": "Désarmée"
+              }
+            },
+            {
+              "value": "armed_home",
+              "label": {
+                "en": "Partial (day)",
+                "fr": "Partielle (jour)"
+              }
+            },
             {
               "value": "armed_night",
-              "label": { "en": "Partial (night)", "fr": "Partielle (nuit)" }
+              "label": {
+                "en": "Partial (night)",
+                "fr": "Partielle (nuit)"
+              }
             },
-            { "value": "armed_away", "label": { "en": "Total", "fr": "Totale" } },
+            {
+              "value": "armed_away",
+              "label": {
+                "en": "Total",
+                "fr": "Totale"
+              }
+            },
             {
               "value": "perimeter",
-              "label": { "en": "Perimeter only", "fr": "Périmétrique seule" }
+              "label": {
+                "en": "Perimeter only",
+                "fr": "Périmétrique seule"
+              }
             },
             {
               "value": "armed_home_perimeter",
-              "label": { "en": "Partial (day) + perimeter", "fr": "Partielle (jour) + périm." }
+              "label": {
+                "en": "Partial (day) + perimeter",
+                "fr": "Partielle (jour) + périm."
+              }
             },
             {
               "value": "armed_night_perimeter",
-              "label": { "en": "Partial (night) + perimeter", "fr": "Partielle (nuit) + périm." }
+              "label": {
+                "en": "Partial (night) + perimeter",
+                "fr": "Partielle (nuit) + périm."
+              }
             },
             {
               "value": "armed_away_perimeter",
-              "label": { "en": "Total + perimeter", "fr": "Totale + périmétrique" }
+              "label": {
+                "en": "Total + perimeter",
+                "fr": "Totale + périmétrique"
+              }
             }
           ]
         }
       ],
       "variables": [
-        { "key": "mode", "type": "string", "label": { "en": "New mode", "fr": "Nouveau mode" } },
+        {
+          "key": "mode",
+          "type": "string",
+          "label": {
+            "en": "New mode",
+            "fr": "Nouveau mode"
+          }
+        },
         {
           "key": "previous_mode",
           "type": "string",
-          "label": { "en": "Previous mode", "fr": "Mode précédent" }
+          "label": {
+            "en": "Previous mode",
+            "fr": "Mode précédent"
+          }
         },
         {
           "key": "changed_by",
           "type": "string",
-          "label": { "en": "Changed by", "fr": "Changé par" }
+          "label": {
+            "en": "Changed by",
+            "fr": "Changé par"
+          }
         }
       ]
     },
@@ -244,25 +407,53 @@
           "key": "device",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Detector", "fr": "Détecteur" },
+          "label": {
+            "en": "Detector",
+            "fr": "Détecteur"
+          },
           "required": false
         },
         {
           "key": "state",
           "type": "multi_select",
-          "label": { "en": "State", "fr": "État" },
+          "label": {
+            "en": "State",
+            "fr": "État"
+          },
           "options": [
-            { "value": "open", "label": { "en": "Opened", "fr": "Ouverte" } },
-            { "value": "closed", "label": { "en": "Closed", "fr": "Fermée" } }
+            {
+              "value": "open",
+              "label": {
+                "en": "Opened",
+                "fr": "Ouverte"
+              }
+            },
+            {
+              "value": "closed",
+              "label": {
+                "en": "Closed",
+                "fr": "Fermée"
+              }
+            }
           ]
         }
       ],
       "variables": [
-        { "key": "state", "type": "string", "label": { "en": "State", "fr": "État" } },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "State",
+            "fr": "État"
+          }
+        },
         {
           "key": "device_name",
           "type": "string",
-          "label": { "en": "Detector name", "fr": "Nom du détecteur" }
+          "label": {
+            "en": "Detector name",
+            "fr": "Nom du détecteur"
+          }
         }
       ]
     },
@@ -280,29 +471,51 @@
         {
           "key": "reason",
           "type": "multi_select",
-          "label": { "en": "Reason", "fr": "Raison" },
+          "label": {
+            "en": "Reason",
+            "fr": "Raison"
+          },
           "options": [
             {
               "value": "mfa_required",
-              "label": { "en": "Code required", "fr": "Code requis" }
+              "label": {
+                "en": "Code required",
+                "fr": "Code requis"
+              }
             },
             {
               "value": "auth_failed",
-              "label": { "en": "Login refused", "fr": "Connexion refusée" }
+              "label": {
+                "en": "Login refused",
+                "fr": "Connexion refusée"
+              }
             },
             {
               "value": "rate_limited",
-              "label": { "en": "Too many requests", "fr": "Trop de requêtes" }
+              "label": {
+                "en": "Too many requests",
+                "fr": "Trop de requêtes"
+              }
             },
             {
               "value": "unreachable",
-              "label": { "en": "Cloud unreachable", "fr": "Cloud injoignable" }
+              "label": {
+                "en": "Cloud unreachable",
+                "fr": "Cloud injoignable"
+              }
             }
           ]
         }
       ],
       "variables": [
-        { "key": "reason", "type": "string", "label": { "en": "Reason", "fr": "Raison" } }
+        {
+          "key": "reason",
+          "type": "string",
+          "label": {
+            "en": "Reason",
+            "fr": "Raison"
+          }
+        }
       ]
     }
   ],
@@ -332,31 +545,67 @@
         {
           "key": "mode",
           "type": "select",
-          "label": { "en": "Mode", "fr": "Mode" },
+          "label": {
+            "en": "Mode",
+            "fr": "Mode"
+          },
           "required": true,
           "options": [
-            { "value": "disarmed", "label": { "en": "Disarmed", "fr": "Désarmée" } },
-            { "value": "armed_home", "label": { "en": "Partial (day)", "fr": "Partielle (jour)" } },
+            {
+              "value": "disarmed",
+              "label": {
+                "en": "Disarmed",
+                "fr": "Désarmée"
+              }
+            },
+            {
+              "value": "armed_home",
+              "label": {
+                "en": "Partial (day)",
+                "fr": "Partielle (jour)"
+              }
+            },
             {
               "value": "armed_night",
-              "label": { "en": "Partial (night)", "fr": "Partielle (nuit)" }
+              "label": {
+                "en": "Partial (night)",
+                "fr": "Partielle (nuit)"
+              }
             },
-            { "value": "armed_away", "label": { "en": "Total", "fr": "Totale" } },
+            {
+              "value": "armed_away",
+              "label": {
+                "en": "Total",
+                "fr": "Totale"
+              }
+            },
             {
               "value": "perimeter",
-              "label": { "en": "Perimeter only", "fr": "Périmétrique seule" }
+              "label": {
+                "en": "Perimeter only",
+                "fr": "Périmétrique seule"
+              }
             },
             {
               "value": "armed_home_perimeter",
-              "label": { "en": "Partial (day) + perimeter", "fr": "Partielle (jour) + périm." }
+              "label": {
+                "en": "Partial (day) + perimeter",
+                "fr": "Partielle (jour) + périm."
+              }
             },
             {
               "value": "armed_night_perimeter",
-              "label": { "en": "Partial (night) + perimeter", "fr": "Partielle (nuit) + périm." }
+              "label": {
+                "en": "Partial (night) + perimeter",
+                "fr": "Partielle (nuit) + périm."
+              }
             },
             {
               "value": "armed_away_perimeter",
-              "label": { "en": "Total + perimeter", "fr": "Totale + périmétrique" }
+              "label": {
+                "en": "Total + perimeter",
+                "fr": "Totale + périmétrique"
+              }
             }
           ]
         },
@@ -372,22 +621,38 @@
         }
       ],
       "outputs": [
-        { "key": "success", "type": "boolean", "label": { "en": "Done", "fr": "Effectué" } },
+        {
+          "key": "success",
+          "type": "boolean",
+          "label": {
+            "en": "Done",
+            "fr": "Effectué"
+          }
+        },
         {
           "key": "mode",
           "type": "string",
-          "label": { "en": "Alarm mode", "fr": "Mode de l'alarme" }
+          "label": {
+            "en": "Alarm mode",
+            "fr": "Mode de l'alarme"
+          }
         },
         {
           "key": "reason",
           "type": "string",
-          "label": { "en": "Reason of a refusal", "fr": "Raison d'un refus" }
+          "label": {
+            "en": "Reason of a refusal",
+            "fr": "Raison d'un refus"
+          }
         }
       ]
     },
     {
       "key": "refresh_alarm",
-      "label": { "en": "Read the Verisure alarm now", "fr": "Lire l'alarme Verisure maintenant" },
+      "label": {
+        "en": "Read the Verisure alarm now",
+        "fr": "Lire l'alarme Verisure maintenant"
+      },
       "description": {
         "en": "Ask the alarm its real state instead of waiting for the next refresh.",
         "fr": "Demande son état réel à l'alarme au lieu d'attendre le prochain rafraîchissement."
@@ -409,7 +674,10 @@
         {
           "key": "mode",
           "type": "string",
-          "label": { "en": "Alarm mode", "fr": "Mode de l'alarme" }
+          "label": {
+            "en": "Alarm mode",
+            "fr": "Mode de l'alarme"
+          }
         }
       ]
     }
@@ -417,7 +685,10 @@
   "widgets": [
     {
       "key": "alarm",
-      "label": { "en": "Verisure alarm", "fr": "Alarme Verisure" },
+      "label": {
+        "en": "Verisure alarm",
+        "fr": "Alarme Verisure"
+      },
       "description": {
         "en": "Alarm mode, last change, open doors and windows, buttons to arm.",
         "fr": "Mode de l'alarme, dernier changement, ouvrants ouverts, boutons pour armer."
