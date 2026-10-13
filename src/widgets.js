@@ -56,7 +56,7 @@ const BUTTONS = [
   },
   {
     mode: MODES.DISARMED,
-    label: { en: 'Disarm', fr: 'Désarmer', de: 'Unscharf schalten', es: 'Desarmar' },
+    label: { en: 'Disarm', fr: 'Désarmer', de: 'Unscharf schalten', es: 'Desconectar' },
     icon: 'unlock',
     style: 'danger',
   },
@@ -134,7 +134,7 @@ function emptyContent(hub) {
   const message = STATUS_MESSAGES[hub.status] ?? {
     en: 'Choose the alarm in the widget settings.',
     fr: "Choisissez l'alarme dans les réglages du widget.",
-    de: 'Wählen Sie die Alarmanlage in den Widget-Einstellungen.',
+    de: 'Wähle die Alarmanlage in den Widget-Einstellungen.',
     es: 'Elija la alarma en la configuración del widget.',
   };
   return {
@@ -267,7 +267,7 @@ export const WIDGETS = {
             en: 'Not armed: ',
             fr: 'Non armée : ',
             de: 'Nicht scharf geschaltet: ',
-            es: 'No armada: ',
+            es: 'No conectada: ',
           };
           return textsOf((language) => `${prefix[language]}${err.message}`.slice(0, 200));
         }

@@ -6,7 +6,7 @@
     "en": "Arm, disarm and follow your Verisure alarm, its detectors and sensors from Gladys.",
     "fr": "Armez, désarmez et suivez votre alarme Verisure, ses détecteurs et capteurs depuis Gladys.",
     "de": "Verisure-Alarmanlage scharf und unscharf schalten, Melder und Sensoren in Gladys verfolgen.",
-    "es": "Arme, desarme y siga su alarma Verisure, sus detectores y sensores desde Gladys."
+    "es": "Conecte, desconecte y siga su alarma Verisure, sus detectores y sensores desde Gladys."
   },
   "version": "1.0.1",
   "docker_image": "ghcr.io/prohand/gladys-verisure:1.0.1",
@@ -27,7 +27,7 @@
       "description": {
         "en": "Use the login of your Verisure app. Two Verisure clouds exist: \"My Verisure\" (France, Spain, Italy, Portugal, United Kingdom, Ireland, Latin America) and \"Verisure\" (Nordics, Benelux, Germany...). The first connection asks for a code sent by SMS or e-mail: save, click \"Send a code\", then type it in \"Validate the code\".",
         "fr": "Utilisez l'identifiant de votre application Verisure. Il existe deux clouds Verisure : « My Verisure » (France, Espagne, Italie, Portugal, Royaume-Uni, Irlande, Amérique latine) et « Verisure » (pays nordiques, Benelux, Allemagne…). La première connexion demande un code envoyé par SMS ou e-mail : enregistrez, cliquez sur « Envoyer un code », puis saisissez-le dans « Valider le code ».",
-        "de": "Verwenden Sie die Zugangsdaten Ihrer Verisure-App. Es gibt zwei Verisure-Clouds: „My Verisure“ (Frankreich, Spanien, Italien, Portugal, Vereinigtes Königreich, Irland, Lateinamerika) und „Verisure“ (Nordeuropa, Benelux, Deutschland…). Bei der ersten Verbindung wird ein per SMS oder E-Mail gesendeter Code verlangt: Speichern Sie, klicken Sie auf „Code senden“ und geben Sie ihn dann unter „Code bestätigen“ ein.",
+        "de": "Verwende die Zugangsdaten deiner Verisure-App. Es gibt zwei Verisure-Clouds: „My Verisure“ (Frankreich, Spanien, Italien, Portugal, Vereinigtes Königreich, Irland, Lateinamerika) und „Verisure“ (Nordeuropa, Benelux, Deutschland…). Bei der ersten Verbindung wird ein per SMS oder E-Mail gesendeter Code verlangt: Speichere, klicke auf „Code senden“ und gib ihn dann unter „Code bestätigen“ ein.",
         "es": "Utilice el usuario de su aplicación Verisure. Existen dos nubes Verisure: «My Verisure» (Francia, España, Italia, Portugal, Reino Unido, Irlanda, Latinoamérica) y «Verisure» (países nórdicos, Benelux, Alemania…). La primera conexión pide un código enviado por SMS o correo electrónico: guarde, pulse «Enviar un código» y escríbalo después en «Validar el código»."
       },
       "links": [
@@ -63,7 +63,7 @@
       "description": {
         "en": "The app you use to drive your alarm.",
         "fr": "L'application qui pilote votre alarme.",
-        "de": "Die App, mit der Sie Ihre Alarmanlage steuern.",
+        "de": "Die App, mit der du deine Alarmanlage steuerst.",
         "es": "La aplicación con la que controla su alarma."
       },
       "required": true,
@@ -101,7 +101,7 @@
       "description": {
         "en": "Country of your contract. Only used by the My Verisure app.",
         "fr": "Pays de votre contrat. Utilisé seulement par l'application My Verisure.",
-        "de": "Land Ihres Vertrags. Wird nur von der App My Verisure verwendet.",
+        "de": "Land deines Vertrags. Wird nur von der App My Verisure verwendet.",
         "es": "País de su contrato. Solo lo usa la aplicación My Verisure."
       },
       "required": false,
@@ -211,7 +211,7 @@
       "description": {
         "en": "The login of your Verisure app (e-mail or customer number).",
         "fr": "L'identifiant de votre application Verisure (e-mail ou numéro client).",
-        "de": "Der Benutzername Ihrer Verisure-App (E-Mail oder Kundennummer).",
+        "de": "Der Benutzername deiner Verisure-App (E-Mail oder Kundennummer).",
         "es": "El usuario de su aplicación Verisure (correo electrónico o número de cliente)."
       },
       "placeholder": {
@@ -246,7 +246,7 @@
         "en": "Verisure app only: the code that arms and disarms the alarm and drives the locks. My Verisure does not need it.",
         "fr": "Application Verisure seulement : le code qui arme et désarme l'alarme et pilote les serrures. My Verisure n'en a pas besoin.",
         "de": "Nur Verisure-App: der Code, der die Alarmanlage scharf und unscharf schaltet und die Schlösser steuert. My Verisure benötigt ihn nicht.",
-        "es": "Solo aplicación Verisure: el código que arma y desarma la alarma y controla las cerraduras. My Verisure no lo necesita."
+        "es": "Solo aplicación Verisure: el código que conecta y desconecta la alarma y controla las cerraduras. My Verisure no lo necesita."
       },
       "required": false
     },
@@ -262,7 +262,7 @@
       "description": {
         "en": "How often Verisure is read, in seconds. Verisure blocks accounts that ask too often: keep 120 or more.",
         "fr": "Fréquence de lecture de Verisure, en secondes. Verisure bloque les comptes trop bavards : gardez 120 ou plus.",
-        "de": "Wie oft Verisure abgefragt wird, in Sekunden. Verisure sperrt Konten, die zu oft anfragen: Behalten Sie 120 oder mehr bei.",
+        "de": "Wie oft Verisure abgefragt wird, in Sekunden. Verisure sperrt Konten, die zu oft anfragen: Behalte 120 oder mehr bei.",
         "es": "Frecuencia de lectura de Verisure, en segundos. Verisure bloquea las cuentas que consultan demasiado: mantenga 120 o más."
       },
       "required": false,
@@ -363,7 +363,7 @@
         "en": "Armed or disarmed from the keypad, a badge, the app or a remote. Gladys's own orders never fire it.",
         "fr": "Armée ou désarmée au clavier, au badge, par l'application ou une télécommande. Les ordres de Gladys ne le déclenchent jamais.",
         "de": "Am Bedienteil, mit einem Badge, über die App oder eine Fernbedienung scharf oder unscharf geschaltet. Befehle von Gladys lösen ihn nie aus.",
-        "es": "Armada o desarmada desde el teclado, una llave, la aplicación o un mando. Las órdenes de Gladys nunca lo activan."
+        "es": "Conectada o desconectada desde el teclado, una llave, la aplicación o un mando. Las órdenes de Gladys nunca lo activan."
       },
       "fields": [
         {
@@ -394,7 +394,7 @@
                 "en": "Disarmed",
                 "fr": "Désarmée",
                 "de": "Unscharf",
-                "es": "Desarmada"
+                "es": "Desconectada"
               }
             },
             {
@@ -668,7 +668,7 @@
         "en": "Arm or disarm the alarm. A refusal (door left open) is an output, not a failure.",
         "fr": "Arme ou désarme l'alarme. Un refus (porte restée ouverte) est un résultat, pas un échec.",
         "de": "Schaltet die Alarmanlage scharf oder unscharf. Eine Ablehnung (Tür offen gelassen) ist ein Ergebnis, kein Fehler.",
-        "es": "Arma o desarma la alarma. Un rechazo (puerta abierta) es un resultado, no un fallo."
+        "es": "Conecta o desconecta la alarma. Un rechazo (puerta abierta) es un resultado, no un fallo."
       },
       "timeout_seconds": 120,
       "fields": [
@@ -701,7 +701,7 @@
                 "en": "Disarmed",
                 "fr": "Désarmée",
                 "de": "Unscharf",
-                "es": "Desarmada"
+                "es": "Desconectada"
               }
             },
             {
@@ -776,7 +776,7 @@
             "en": "Arm even with a door or window open",
             "fr": "Armer même avec une porte ou fenêtre ouverte",
             "de": "Auch bei offener Tür oder offenem Fenster scharf schalten",
-            "es": "Armar aunque haya una puerta o ventana abierta"
+            "es": "Conectar aunque haya una puerta o ventana abierta"
           },
           "required": false,
           "default": false
@@ -871,7 +871,7 @@
         "en": "Alarm mode, last change, open doors and windows, buttons to arm.",
         "fr": "Mode de l'alarme, dernier changement, ouvrants ouverts, boutons pour armer.",
         "de": "Alarmmodus, letzte Änderung, offene Türen und Fenster, Tasten zum Scharfschalten.",
-        "es": "Modo de la alarma, último cambio, puertas y ventanas abiertas, botones para armar."
+        "es": "Modo de la alarma, último cambio, puertas y ventanas abiertas, botones para conectar."
       },
       "icon": "shield",
       "action_timeout_seconds": 120,
@@ -895,7 +895,7 @@
             "en": "Show a Disarm button (anyone seeing the dashboard can use it)",
             "fr": "Afficher un bouton Désarmer (toute personne voyant le tableau de bord peut l'utiliser)",
             "de": "Taste „Unscharf schalten“ anzeigen (jeder, der das Dashboard sieht, kann sie benutzen)",
-            "es": "Mostrar un botón Desarmar (cualquiera que vea el panel puede usarlo)"
+            "es": "Mostrar un botón Desconectar (cualquiera que vea el panel puede usarlo)"
           },
           "required": false,
           "default": false

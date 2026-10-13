@@ -42,7 +42,7 @@ export const MODE_ORDER = [
 ];
 
 export const MODE_LABELS = {
-  [MODES.DISARMED]: { en: 'Disarmed', fr: 'Désarmée', de: 'Unscharf', es: 'Desarmada' },
+  [MODES.DISARMED]: { en: 'Disarmed', fr: 'Désarmée', de: 'Unscharf', es: 'Desconectada' },
   [MODES.ARMED_HOME]: {
     en: 'Partial (day)',
     fr: 'Partielle (jour)',

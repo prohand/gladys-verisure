@@ -151,7 +151,7 @@ test('test_connection lists the installations and their mode', async (t) => {
   const ack = await gladys.fake.action('test_connection');
   assert.equal(ack.data.message.fr, 'Connecté : Maison (Désarmée).');
   assert.equal(ack.data.message.de, 'Verbunden: Maison (Unscharf).');
-  assert.equal(ack.data.message.es, 'Conectado: Maison (Desarmada).');
+  assert.equal(ack.data.message.es, 'Conectado: Maison (Desconectada).');
 });
 
 test('new credentials make a new client and a new read', async (t) => {

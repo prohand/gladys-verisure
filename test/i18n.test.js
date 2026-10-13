@@ -39,6 +39,6 @@ test('every status message and mode label is written in every language', () => {
 
 test('modeLabel() speaks German and Spanish', () => {
   assert.equal(modeLabel('armed_away', 'de'), 'Vollscharf');
-  assert.equal(modeLabel('disarmed', 'es'), 'Desarmada');
+  assert.equal(modeLabel('disarmed', 'es'), 'Desconectada');
   assert.equal(modeLabel('nope', 'es'), 'Desconocido');
 });

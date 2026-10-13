@@ -24,7 +24,7 @@ function explain(err) {
     return {
       en: 'Click "Send a code" first, then type the code you received.',
       fr: "Cliquez d'abord sur « Envoyer un code », puis saisissez le code reçu.",
-      de: 'Klicken Sie zuerst auf „Code senden“ und geben Sie dann den erhaltenen Code ein.',
+      de: 'Klicke zuerst auf „Code senden“ und gib dann den erhaltenen Code ein.',
       es: 'Pulse primero «Enviar un código» y escriba después el código recibido.',
     };
   }
@@ -92,13 +92,13 @@ export const ACTIONS = {
         ? {
             en: `Code sent by e-mail${where}: type it in "Validate the code".`,
             fr: `Code envoyé par e-mail${where} : saisissez-le dans « Valider le code ».`,
-            de: `Code per E-Mail gesendet${where}: Geben Sie ihn unter „Code bestätigen“ ein.`,
+            de: `Code per E-Mail gesendet${where}: Gib ihn unter „Code bestätigen“ ein.`,
             es: `Código enviado por correo electrónico${where}: escríbalo en «Validar el código».`,
           }
         : {
             en: `Code sent by SMS${where}: type it in "Validate the code".`,
             fr: `Code envoyé par SMS${where} : saisissez-le dans « Valider le code ».`,
-            de: `Code per SMS gesendet${where}: Geben Sie ihn unter „Code bestätigen“ ein.`,
+            de: `Code per SMS gesendet${where}: Gib ihn unter „Code bestätigen“ ein.`,
             es: `Código enviado por SMS${where}: escríbalo en «Validar el código».`,
           };
     } catch (err) {
@@ -115,9 +115,9 @@ export const ACTIONS = {
     try {
       await hub.validateCode(code);
       return {
-        en: 'Code accepted: the integration is connected to Verisure. Your devices are in the Discovery tab.',
+        en: 'Code accepted: the integration is connected to Verisure. Your devices are in the Discover tab.',
         fr: "Code accepté : l'intégration est connectée à Verisure. Vos appareils sont dans l'onglet Découverte.",
-        de: 'Code akzeptiert: Die Integration ist mit Verisure verbunden. Ihre Geräte finden Sie im Tab „Entdecken“.',
+        de: 'Code akzeptiert: Die Integration ist mit Verisure verbunden. Deine Geräte findest du im Tab „Entdecken“.',
         es: 'Código aceptado: la integración está conectada a Verisure. Sus dispositivos están en la pestaña «Descubrir».',
       };
     } catch (err) {

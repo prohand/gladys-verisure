@@ -1,6 +1,6 @@
 # Verisure
 
-Controle su alarma Verisure desde Gladys: ármela, desármela, siga sus
+Controle su alarma Verisure desde Gladys: conéctela, desconéctela, siga sus
 detectores y reaccione en sus escenas.
 
 La integración pasa por la **nube de Verisure** (distintivo «Nube» en los
@@ -12,10 +12,10 @@ minutos por defecto. API no oficial: Verisure puede cambiarla sin previo aviso.
 Existen dos nubes Verisure, con cuentas y funciones distintas. Elija la de la
 aplicación que utiliza:
 
-| Aplicación      | Países                                                                                  | Lo que ve Gladys                                                                                                                                |
-| --------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **My Verisure** | Francia, España, Italia, Portugal, Reino Unido, Irlanda, Argentina, Brasil, Chile, Perú | La alarma (todos sus modos, perimetral incluido) y los sensores de confort (temperatura, humedad)                                               |
-| **Verisure**    | Suecia, Noruega, Dinamarca, Finlandia, Bélgica, Países Bajos, Alemania…                 | La alarma (desarmada, parcial, total), detectores de apertura, sensores de temperatura/humedad, enchufes inteligentes y cerraduras inteligentes |
+| Aplicación      | Países                                                                                  | Lo que ve Gladys                                                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **My Verisure** | Francia, España, Italia, Portugal, Reino Unido, Irlanda, Argentina, Brasil, Chile, Perú | La alarma (todos sus modos, perimetral incluido) y los sensores de confort (temperatura, humedad)                                                                    |
+| **Verisure**    | Suecia, Noruega, Dinamarca, Finlandia, Bélgica, Países Bajos, Alemania…                 | La alarma (desconectada, conexión parcial, conexión total), detectores de apertura, sensores de temperatura/humedad, enchufes inteligentes y cerraduras inteligentes |
 
 ## Configuración
 
@@ -23,7 +23,7 @@ aplicación que utiliza:
 2. Elija su **aplicación Verisure** y, para My Verisure, su **país**.
 3. Escriba el **usuario** y la **contraseña** de su aplicación.
 4. Solo aplicación Verisure: escriba el **código de la alarma** (el del
-   teclado). Arma, desarma y controla las cerraduras. My Verisure no lo
+   teclado). Conecta, desconecta y controla las cerraduras. My Verisure no lo
    necesita.
 5. Guarde y pulse después **Probar la conexión**.
 
@@ -59,10 +59,11 @@ desencadenante **Se ha perdido la conexión con Verisure**.
 
 ## Dispositivos
 
-Una vez conectado, abra la pestaña **Descubrir** y añada los dispositivos:
+Una vez conectado, abra la pestaña **Descubrir** y añada los dispositivos con
+**Añadir a Gladys**:
 
 - **Verisure _nombre de la instalación_**: el **modo de la alarma**, una
-  selección. Los modos ofrecidos son los de su central: Desarmada, Parcial
+  selección. Los modos ofrecidos son los de su central: Desconectada, Parcial
   (día), Parcial (noche) y Total, más los modos perimetrales cuando su
   instalación tiene detectores exteriores. Elegir un modo envía la orden; el
   valor cambia cuando Verisure la ha confirmado (de unos segundos a un minuto y
@@ -71,7 +72,7 @@ Una vez conectado, abra la pestaña **Descubrir** y añada los dispositivos:
 - **Sensores de temperatura y humedad**.
 - **Enchufes inteligentes** y **cerraduras** (aplicación Verisure).
 
-Cuando la alarma se niega a armarse (una puerta o una ventana abierta), la
+Cuando la alarma se niega a conectarse (una puerta o una ventana abierta), la
 orden falla y Gladys muestra el error.
 
 ## Escenas
@@ -81,7 +82,7 @@ posterior), en la categoría **Integraciones**.
 
 ### Desencadenantes
 
-- **El modo de la alarma Verisure ha cambiado**: armada o desarmada desde el
+- **El modo de la alarma Verisure ha cambiado**: conectada o desconectada desde el
   teclado, una llave, la aplicación o un mando. Filtre por la alarma y el nuevo
   modo. Las acciones siguientes pueden leer `{{triggerEvent.data.mode}}`,
   `{{triggerEvent.data.previous_mode}}` y `{{triggerEvent.data.changed_by}}`
@@ -100,7 +101,7 @@ Los valores de los modos: `disarmed`, `armed_home` (parcial día),
 ### Acciones
 
 - **Cambiar el modo de la alarma Verisure**: elija la alarma (vacío = la única
-  de la cuenta) y el modo. Marque **Armar aunque haya una puerta o ventana
+  de la cuenta) y el modo. Marque **Conectar aunque haya una puerta o ventana
   abierta** para forzar cuando la central lo permita. Resultados para las
   acciones siguientes: `success` (true / false), `mode` (el modo de la alarma)
   y `reason` (por qué se rechazó, p. ej. la puerta abierta). Un rechazo no
@@ -110,15 +111,16 @@ Los valores de los modos: `disarmed`, `armed_home` (parcial día),
 
 ## Panel
 
-Añada el widget **Alarma Verisure**: modo de la alarma (verde desarmada,
-naranja parcial, rojo total), último cambio (quién, hace cuánto), puertas y
-ventanas abiertas, conexión, temperatura y botones para armar (cada pulsación
-pide una confirmación).
+En **Panel → Editar → Nuevo widget**, añada el widget **Alarma Verisure**: modo
+de la alarma (verde desconectada, naranja conexión parcial, rojo conexión
+total), último cambio (quién, hace cuánto), puertas y ventanas abiertas,
+conexión, temperatura y botones para conectar (cada pulsación pide una
+confirmación).
 
-El botón **Desarmar** solo aparece cuando marca **Mostrar un botón Desarmar**
-en la configuración del widget. Atención: cualquiera que vea ese panel podrá
-entonces desarmar su alarma. No lo marque en un panel compartido ni en uno
-mostrado en la entrada.
+El botón **Desconectar** solo aparece cuando marca **Mostrar un botón
+Desconectar** en la configuración del widget. Atención: cualquiera que vea ese
+panel podrá entonces desconectar su alarma. No lo marque en un panel compartido
+ni en uno mostrado en la entrada.
 
 ## Solución de problemas
 
@@ -131,7 +133,7 @@ mostrado en la entrada.
 - **«Verisure limita las solicitudes»**: la integración espera 15 minutos antes
   de volver a intentarlo. Aumente el intervalo de actualización si vuelve a
   ocurrir.
-- **Falta el código de la alarma** (aplicación Verisure): rellénelo para armar,
-  desarmar y controlar las cerraduras.
+- **Falta el código de la alarma** (aplicación Verisure): rellénelo para conectar,
+  desconectar y controlar las cerraduras.
 - Para los detalles, active los **registros detallados** y lea los registros de
   la integración desde Gladys.
