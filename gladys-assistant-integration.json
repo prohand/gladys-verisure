@@ -4,7 +4,9 @@
   "name": "Verisure",
   "description": {
     "en": "Arm, disarm and follow your Verisure alarm, its detectors and sensors from Gladys.",
-    "fr": "Armez, désarmez et suivez votre alarme Verisure, ses détecteurs et capteurs depuis Gladys."
+    "fr": "Armez, désarmez et suivez votre alarme Verisure, ses détecteurs et capteurs depuis Gladys.",
+    "de": "Verisure-Alarmanlage scharf und unscharf schalten, Melder und Sensoren in Gladys verfolgen.",
+    "es": "Arme, desarme y siga su alarma Verisure, sus detectores y sensores desde Gladys."
   },
   "version": "1.0.1",
   "docker_image": "ghcr.io/prohand/gladys-verisure:1.0.1",
@@ -18,25 +20,33 @@
       "type": "section",
       "label": {
         "en": "Getting started",
-        "fr": "Pour commencer"
+        "fr": "Pour commencer",
+        "de": "Erste Schritte",
+        "es": "Primeros pasos"
       },
       "description": {
         "en": "Use the login of your Verisure app. Two Verisure clouds exist: \"My Verisure\" (France, Spain, Italy, Portugal, United Kingdom, Ireland, Latin America) and \"Verisure\" (Nordics, Benelux, Germany...). The first connection asks for a code sent by SMS or e-mail: save, click \"Send a code\", then type it in \"Validate the code\".",
-        "fr": "Utilisez l'identifiant de votre application Verisure. Il existe deux clouds Verisure : « My Verisure » (France, Espagne, Italie, Portugal, Royaume-Uni, Irlande, Amérique latine) et « Verisure » (pays nordiques, Benelux, Allemagne…). La première connexion demande un code envoyé par SMS ou e-mail : enregistrez, cliquez sur « Envoyer un code », puis saisissez-le dans « Valider le code »."
+        "fr": "Utilisez l'identifiant de votre application Verisure. Il existe deux clouds Verisure : « My Verisure » (France, Espagne, Italie, Portugal, Royaume-Uni, Irlande, Amérique latine) et « Verisure » (pays nordiques, Benelux, Allemagne…). La première connexion demande un code envoyé par SMS ou e-mail : enregistrez, cliquez sur « Envoyer un code », puis saisissez-le dans « Valider le code ».",
+        "de": "Verwenden Sie die Zugangsdaten Ihrer Verisure-App. Es gibt zwei Verisure-Clouds: „My Verisure“ (Frankreich, Spanien, Italien, Portugal, Vereinigtes Königreich, Irland, Lateinamerika) und „Verisure“ (Nordeuropa, Benelux, Deutschland…). Bei der ersten Verbindung wird ein per SMS oder E-Mail gesendeter Code verlangt: Speichern Sie, klicken Sie auf „Code senden“ und geben Sie ihn dann unter „Code bestätigen“ ein.",
+        "es": "Utilice el usuario de su aplicación Verisure. Existen dos nubes Verisure: «My Verisure» (Francia, España, Italia, Portugal, Reino Unido, Irlanda, Latinoamérica) y «Verisure» (países nórdicos, Benelux, Alemania…). La primera conexión pide un código enviado por SMS o correo electrónico: guarde, pulse «Enviar un código» y escríbalo después en «Validar el código»."
       },
       "links": [
         {
           "url": "https://customers.securitasdirect.fr",
           "label": {
             "en": "My Verisure (France)",
-            "fr": "My Verisure (France)"
+            "fr": "My Verisure (France)",
+            "de": "My Verisure (Frankreich)",
+            "es": "My Verisure (Francia)"
           }
         },
         {
           "url": "https://mypages.verisure.com",
           "label": {
             "en": "Verisure My Pages",
-            "fr": "Verisure My Pages"
+            "fr": "Verisure My Pages",
+            "de": "Verisure My Pages",
+            "es": "Verisure My Pages"
           }
         }
       ]
@@ -46,11 +56,15 @@
       "type": "select",
       "label": {
         "en": "Verisure app",
-        "fr": "Application Verisure"
+        "fr": "Application Verisure",
+        "de": "Verisure-App",
+        "es": "Aplicación Verisure"
       },
       "description": {
         "en": "The app you use to drive your alarm.",
-        "fr": "L'application qui pilote votre alarme."
+        "fr": "L'application qui pilote votre alarme.",
+        "de": "Die App, mit der Sie Ihre Alarmanlage steuern.",
+        "es": "La aplicación con la que controla su alarma."
       },
       "required": true,
       "default": "owa",
@@ -59,14 +73,18 @@
           "value": "owa",
           "label": {
             "en": "My Verisure (FR, ES, IT, PT, UK, IE, Latin America)",
-            "fr": "My Verisure (FR, ES, IT, PT, UK, IE, Amérique latine)"
+            "fr": "My Verisure (FR, ES, IT, PT, UK, IE, Amérique latine)",
+            "de": "My Verisure (FR, ES, IT, PT, UK, IE, Lateinamerika)",
+            "es": "My Verisure (FR, ES, IT, PT, UK, IE, Latinoamérica)"
           }
         },
         {
           "value": "mypages",
           "label": {
             "en": "Verisure (Nordics, Benelux, Germany...)",
-            "fr": "Verisure (pays nordiques, Benelux, Allemagne…)"
+            "fr": "Verisure (pays nordiques, Benelux, Allemagne…)",
+            "de": "Verisure (Nordeuropa, Benelux, Deutschland…)",
+            "es": "Verisure (países nórdicos, Benelux, Alemania…)"
           }
         }
       ]
@@ -76,11 +94,15 @@
       "type": "select",
       "label": {
         "en": "Country (My Verisure)",
-        "fr": "Pays (My Verisure)"
+        "fr": "Pays (My Verisure)",
+        "de": "Land (My Verisure)",
+        "es": "País (My Verisure)"
       },
       "description": {
         "en": "Country of your contract. Only used by the My Verisure app.",
-        "fr": "Pays de votre contrat. Utilisé seulement par l'application My Verisure."
+        "fr": "Pays de votre contrat. Utilisé seulement par l'application My Verisure.",
+        "de": "Land Ihres Vertrags. Wird nur von der App My Verisure verwendet.",
+        "es": "País de su contrato. Solo lo usa la aplicación My Verisure."
       },
       "required": false,
       "default": "FR",
@@ -89,70 +111,90 @@
           "value": "FR",
           "label": {
             "en": "France",
-            "fr": "France"
+            "fr": "France",
+            "de": "Frankreich",
+            "es": "Francia"
           }
         },
         {
           "value": "ES",
           "label": {
             "en": "Spain",
-            "fr": "Espagne"
+            "fr": "Espagne",
+            "de": "Spanien",
+            "es": "España"
           }
         },
         {
           "value": "IT",
           "label": {
             "en": "Italy",
-            "fr": "Italie"
+            "fr": "Italie",
+            "de": "Italien",
+            "es": "Italia"
           }
         },
         {
           "value": "PT",
           "label": {
             "en": "Portugal",
-            "fr": "Portugal"
+            "fr": "Portugal",
+            "de": "Portugal",
+            "es": "Portugal"
           }
         },
         {
           "value": "GB",
           "label": {
             "en": "United Kingdom",
-            "fr": "Royaume-Uni"
+            "fr": "Royaume-Uni",
+            "de": "Vereinigtes Königreich",
+            "es": "Reino Unido"
           }
         },
         {
           "value": "IE",
           "label": {
             "en": "Ireland",
-            "fr": "Irlande"
+            "fr": "Irlande",
+            "de": "Irland",
+            "es": "Irlanda"
           }
         },
         {
           "value": "AR",
           "label": {
             "en": "Argentina",
-            "fr": "Argentine"
+            "fr": "Argentine",
+            "de": "Argentinien",
+            "es": "Argentina"
           }
         },
         {
           "value": "BR",
           "label": {
             "en": "Brazil",
-            "fr": "Brésil"
+            "fr": "Brésil",
+            "de": "Brasilien",
+            "es": "Brasil"
           }
         },
         {
           "value": "CL",
           "label": {
             "en": "Chile",
-            "fr": "Chili"
+            "fr": "Chili",
+            "de": "Chile",
+            "es": "Chile"
           }
         },
         {
           "value": "PE",
           "label": {
             "en": "Peru",
-            "fr": "Pérou"
+            "fr": "Pérou",
+            "de": "Peru",
+            "es": "Perú"
           }
         }
       ]
@@ -162,15 +204,21 @@
       "type": "string",
       "label": {
         "en": "Username",
-        "fr": "Identifiant"
+        "fr": "Identifiant",
+        "de": "Benutzername",
+        "es": "Usuario"
       },
       "description": {
         "en": "The login of your Verisure app (e-mail or customer number).",
-        "fr": "L'identifiant de votre application Verisure (e-mail ou numéro client)."
+        "fr": "L'identifiant de votre application Verisure (e-mail ou numéro client).",
+        "de": "Der Benutzername Ihrer Verisure-App (E-Mail oder Kundennummer).",
+        "es": "El usuario de su aplicación Verisure (correo electrónico o número de cliente)."
       },
       "placeholder": {
         "en": "e.g. john@example.com",
-        "fr": "ex. jean@exemple.fr"
+        "fr": "ex. jean@exemple.fr",
+        "de": "z. B. max@beispiel.de",
+        "es": "p. ej. juan@ejemplo.es"
       },
       "required": true
     },
@@ -179,7 +227,9 @@
       "type": "secret",
       "label": {
         "en": "Password",
-        "fr": "Mot de passe"
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
       },
       "required": true
     },
@@ -188,11 +238,15 @@
       "type": "secret",
       "label": {
         "en": "Alarm code",
-        "fr": "Code de l'alarme"
+        "fr": "Code de l'alarme",
+        "de": "Alarmcode",
+        "es": "Código de la alarma"
       },
       "description": {
         "en": "Verisure app only: the code that arms and disarms the alarm and drives the locks. My Verisure does not need it.",
-        "fr": "Application Verisure seulement : le code qui arme et désarme l'alarme et pilote les serrures. My Verisure n'en a pas besoin."
+        "fr": "Application Verisure seulement : le code qui arme et désarme l'alarme et pilote les serrures. My Verisure n'en a pas besoin.",
+        "de": "Nur Verisure-App: der Code, der die Alarmanlage scharf und unscharf schaltet und die Schlösser steuert. My Verisure benötigt ihn nicht.",
+        "es": "Solo aplicación Verisure: el código que arma y desarma la alarma y controla las cerraduras. My Verisure no lo necesita."
       },
       "required": false
     },
@@ -201,11 +255,15 @@
       "type": "number",
       "label": {
         "en": "Refresh interval (s)",
-        "fr": "Intervalle de rafraîchissement (s)"
+        "fr": "Intervalle de rafraîchissement (s)",
+        "de": "Aktualisierungsintervall (s)",
+        "es": "Intervalo de actualización (s)"
       },
       "description": {
         "en": "How often Verisure is read, in seconds. Verisure blocks accounts that ask too often: keep 120 or more.",
-        "fr": "Fréquence de lecture de Verisure, en secondes. Verisure bloque les comptes trop bavards : gardez 120 ou plus."
+        "fr": "Fréquence de lecture de Verisure, en secondes. Verisure bloque les comptes trop bavards : gardez 120 ou plus.",
+        "de": "Wie oft Verisure abgefragt wird, in Sekunden. Verisure sperrt Konten, die zu oft anfragen: Behalten Sie 120 oder mehr bei.",
+        "es": "Frecuencia de lectura de Verisure, en segundos. Verisure bloquea las cuentas que consultan demasiado: mantenga 120 o más."
       },
       "required": false,
       "default": 120,
@@ -217,11 +275,15 @@
       "type": "boolean",
       "label": {
         "en": "Detailed logs",
-        "fr": "Logs détaillés"
+        "fr": "Logs détaillés",
+        "de": "Detaillierte Logs",
+        "es": "Registros detallados"
       },
       "description": {
         "en": "Log every exchange with Verisure (no password, no token), to diagnose a problem.",
-        "fr": "Journalise chaque échange avec Verisure (sans mot de passe ni jeton), pour diagnostiquer un problème."
+        "fr": "Journalise chaque échange avec Verisure (sans mot de passe ni jeton), pour diagnostiquer un problème.",
+        "de": "Protokolliert jeden Austausch mit Verisure (ohne Passwort und Token), um ein Problem zu diagnostizieren.",
+        "es": "Registra cada intercambio con Verisure (sin contraseña ni token), para diagnosticar un problema."
       },
       "required": false,
       "default": false
@@ -232,7 +294,9 @@
       "key": "test_connection",
       "label": {
         "en": "Test the connection",
-        "fr": "Tester la connexion"
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
       },
       "timeout_seconds": 60
     },
@@ -240,7 +304,9 @@
       "key": "send_code",
       "label": {
         "en": "Send a code",
-        "fr": "Envoyer un code"
+        "fr": "Envoyer un code",
+        "de": "Code senden",
+        "es": "Enviar un código"
       },
       "timeout_seconds": 30
     },
@@ -248,7 +314,9 @@
       "key": "validate_code",
       "label": {
         "en": "Validate the code",
-        "fr": "Valider le code"
+        "fr": "Valider le code",
+        "de": "Code bestätigen",
+        "es": "Validar el código"
       },
       "timeout_seconds": 60,
       "fields": [
@@ -257,11 +325,15 @@
           "type": "string",
           "label": {
             "en": "Code received",
-            "fr": "Code reçu"
+            "fr": "Code reçu",
+            "de": "Erhaltener Code",
+            "es": "Código recibido"
           },
           "placeholder": {
             "en": "e.g. 123456",
-            "fr": "ex. 123456"
+            "fr": "ex. 123456",
+            "de": "z. B. 123456",
+            "es": "p. ej. 123456"
           },
           "required": true
         }
@@ -271,7 +343,9 @@
       "key": "forget_session",
       "label": {
         "en": "Forget the session",
-        "fr": "Oublier la session"
+        "fr": "Oublier la session",
+        "de": "Sitzung vergessen",
+        "es": "Olvidar la sesión"
       },
       "timeout_seconds": 30
     }
@@ -281,11 +355,15 @@
       "key": "alarm_mode_changed",
       "label": {
         "en": "Verisure alarm mode changed",
-        "fr": "Le mode de l'alarme Verisure a changé"
+        "fr": "Le mode de l'alarme Verisure a changé",
+        "de": "Modus der Verisure-Alarmanlage geändert",
+        "es": "El modo de la alarma Verisure ha cambiado"
       },
       "description": {
         "en": "Armed or disarmed from the keypad, a badge, the app or a remote. Gladys's own orders never fire it.",
-        "fr": "Armée ou désarmée au clavier, au badge, par l'application ou une télécommande. Les ordres de Gladys ne le déclenchent jamais."
+        "fr": "Armée ou désarmée au clavier, au badge, par l'application ou une télécommande. Les ordres de Gladys ne le déclenchent jamais.",
+        "de": "Am Bedienteil, mit einem Badge, über die App oder eine Fernbedienung scharf oder unscharf geschaltet. Befehle von Gladys lösen ihn nie aus.",
+        "es": "Armada o desarmada desde el teclado, una llave, la aplicación o un mando. Las órdenes de Gladys nunca lo activan."
       },
       "fields": [
         {
@@ -294,7 +372,9 @@
           "source": "devices",
           "label": {
             "en": "Alarm",
-            "fr": "Alarme"
+            "fr": "Alarme",
+            "de": "Alarmanlage",
+            "es": "Alarma"
           },
           "required": false
         },
@@ -303,63 +383,81 @@
           "type": "multi_select",
           "label": {
             "en": "New mode",
-            "fr": "Nouveau mode"
+            "fr": "Nouveau mode",
+            "de": "Neuer Modus",
+            "es": "Nuevo modo"
           },
           "options": [
             {
               "value": "disarmed",
               "label": {
                 "en": "Disarmed",
-                "fr": "Désarmée"
+                "fr": "Désarmée",
+                "de": "Unscharf",
+                "es": "Desarmada"
               }
             },
             {
               "value": "armed_home",
               "label": {
                 "en": "Partial (day)",
-                "fr": "Partielle (jour)"
+                "fr": "Partielle (jour)",
+                "de": "Teilscharf (Tag)",
+                "es": "Parcial (día)"
               }
             },
             {
               "value": "armed_night",
               "label": {
                 "en": "Partial (night)",
-                "fr": "Partielle (nuit)"
+                "fr": "Partielle (nuit)",
+                "de": "Teilscharf (Nacht)",
+                "es": "Parcial (noche)"
               }
             },
             {
               "value": "armed_away",
               "label": {
                 "en": "Total",
-                "fr": "Totale"
+                "fr": "Totale",
+                "de": "Vollscharf",
+                "es": "Total"
               }
             },
             {
               "value": "perimeter",
               "label": {
                 "en": "Perimeter only",
-                "fr": "Périmétrique seule"
+                "fr": "Périmétrique seule",
+                "de": "Nur Perimeter",
+                "es": "Solo perimetral"
               }
             },
             {
               "value": "armed_home_perimeter",
               "label": {
                 "en": "Partial (day) + perimeter",
-                "fr": "Partielle (jour) + périm."
+                "fr": "Partielle (jour) + périm.",
+                "de": "Teilscharf (Tag) + Perimeter",
+                "es": "Parcial (día) + perimetral"
               }
             },
             {
               "value": "armed_night_perimeter",
               "label": {
                 "en": "Partial (night) + perimeter",
-                "fr": "Partielle (nuit) + périm."
+                "fr": "Partielle (nuit) + périm.",
+                "de": "Teilscharf (Nacht) + Perimeter",
+                "es": "Parcial (noche) + perimetral"
               }
             },
             {
               "value": "armed_away_perimeter",
               "label": {
                 "en": "Total + perimeter",
-                "fr": "Totale + périmétrique"
+                "fr": "Totale + périmétrique",
+                "de": "Vollscharf + Perimeter",
+                "es": "Total + perimetral"
               }
             }
           ]
@@ -371,7 +469,9 @@
           "type": "string",
           "label": {
             "en": "New mode",
-            "fr": "Nouveau mode"
+            "fr": "Nouveau mode",
+            "de": "Neuer Modus",
+            "es": "Nuevo modo"
           }
         },
         {
@@ -379,7 +479,9 @@
           "type": "string",
           "label": {
             "en": "Previous mode",
-            "fr": "Mode précédent"
+            "fr": "Mode précédent",
+            "de": "Vorheriger Modus",
+            "es": "Modo anterior"
           }
         },
         {
@@ -387,7 +489,9 @@
           "type": "string",
           "label": {
             "en": "Changed by",
-            "fr": "Changé par"
+            "fr": "Changé par",
+            "de": "Geändert von",
+            "es": "Cambiado por"
           }
         }
       ]
@@ -396,11 +500,15 @@
       "key": "door_window_changed",
       "label": {
         "en": "A Verisure door/window detector moved",
-        "fr": "Un détecteur d'ouverture Verisure a bougé"
+        "fr": "Un détecteur d'ouverture Verisure a bougé",
+        "de": "Ein Verisure-Tür-/Fensterkontakt hat sich geändert",
+        "es": "Un detector de apertura Verisure ha cambiado"
       },
       "description": {
         "en": "A door or a window watched by Verisure opened or closed (Verisure app).",
-        "fr": "Une porte ou une fenêtre surveillée par Verisure s'est ouverte ou fermée (application Verisure)."
+        "fr": "Une porte ou une fenêtre surveillée par Verisure s'est ouverte ou fermée (application Verisure).",
+        "de": "Eine von Verisure überwachte Tür oder ein Fenster wurde geöffnet oder geschlossen (Verisure-App).",
+        "es": "Una puerta o una ventana vigilada por Verisure se ha abierto o cerrado (aplicación Verisure)."
       },
       "fields": [
         {
@@ -409,7 +517,9 @@
           "source": "devices",
           "label": {
             "en": "Detector",
-            "fr": "Détecteur"
+            "fr": "Détecteur",
+            "de": "Melder",
+            "es": "Detector"
           },
           "required": false
         },
@@ -418,21 +528,27 @@
           "type": "multi_select",
           "label": {
             "en": "State",
-            "fr": "État"
+            "fr": "État",
+            "de": "Zustand",
+            "es": "Estado"
           },
           "options": [
             {
               "value": "open",
               "label": {
                 "en": "Opened",
-                "fr": "Ouverte"
+                "fr": "Ouverte",
+                "de": "Geöffnet",
+                "es": "Abierta"
               }
             },
             {
               "value": "closed",
               "label": {
                 "en": "Closed",
-                "fr": "Fermée"
+                "fr": "Fermée",
+                "de": "Geschlossen",
+                "es": "Cerrada"
               }
             }
           ]
@@ -444,7 +560,9 @@
           "type": "string",
           "label": {
             "en": "State",
-            "fr": "État"
+            "fr": "État",
+            "de": "Zustand",
+            "es": "Estado"
           }
         },
         {
@@ -452,7 +570,9 @@
           "type": "string",
           "label": {
             "en": "Detector name",
-            "fr": "Nom du détecteur"
+            "fr": "Nom du détecteur",
+            "de": "Name des Melders",
+            "es": "Nombre del detector"
           }
         }
       ]
@@ -461,11 +581,15 @@
       "key": "connection_lost",
       "label": {
         "en": "The Verisure connection is lost",
-        "fr": "La connexion à Verisure est perdue"
+        "fr": "La connexion à Verisure est perdue",
+        "de": "Die Verbindung zu Verisure ist unterbrochen",
+        "es": "Se ha perdido la conexión con Verisure"
       },
       "description": {
         "en": "Verisure stopped answering, refused the login or asks for a new verification code.",
-        "fr": "Verisure ne répond plus, refuse la connexion ou demande un nouveau code de vérification."
+        "fr": "Verisure ne répond plus, refuse la connexion ou demande un nouveau code de vérification.",
+        "de": "Verisure antwortet nicht mehr, verweigert die Anmeldung oder verlangt einen neuen Bestätigungscode.",
+        "es": "Verisure ya no responde, rechaza el inicio de sesión o pide un nuevo código de verificación."
       },
       "fields": [
         {
@@ -473,35 +597,45 @@
           "type": "multi_select",
           "label": {
             "en": "Reason",
-            "fr": "Raison"
+            "fr": "Raison",
+            "de": "Grund",
+            "es": "Motivo"
           },
           "options": [
             {
               "value": "mfa_required",
               "label": {
                 "en": "Code required",
-                "fr": "Code requis"
+                "fr": "Code requis",
+                "de": "Code erforderlich",
+                "es": "Código requerido"
               }
             },
             {
               "value": "auth_failed",
               "label": {
                 "en": "Login refused",
-                "fr": "Connexion refusée"
+                "fr": "Connexion refusée",
+                "de": "Anmeldung verweigert",
+                "es": "Inicio de sesión rechazado"
               }
             },
             {
               "value": "rate_limited",
               "label": {
                 "en": "Too many requests",
-                "fr": "Trop de requêtes"
+                "fr": "Trop de requêtes",
+                "de": "Zu viele Anfragen",
+                "es": "Demasiadas solicitudes"
               }
             },
             {
               "value": "unreachable",
               "label": {
                 "en": "Cloud unreachable",
-                "fr": "Cloud injoignable"
+                "fr": "Cloud injoignable",
+                "de": "Cloud nicht erreichbar",
+                "es": "Nube inaccesible"
               }
             }
           ]
@@ -513,7 +647,9 @@
           "type": "string",
           "label": {
             "en": "Reason",
-            "fr": "Raison"
+            "fr": "Raison",
+            "de": "Grund",
+            "es": "Motivo"
           }
         }
       ]
@@ -524,11 +660,15 @@
       "key": "set_alarm_mode",
       "label": {
         "en": "Set the Verisure alarm mode",
-        "fr": "Changer le mode de l'alarme Verisure"
+        "fr": "Changer le mode de l'alarme Verisure",
+        "de": "Modus der Verisure-Alarmanlage ändern",
+        "es": "Cambiar el modo de la alarma Verisure"
       },
       "description": {
         "en": "Arm or disarm the alarm. A refusal (door left open) is an output, not a failure.",
-        "fr": "Arme ou désarme l'alarme. Un refus (porte restée ouverte) est un résultat, pas un échec."
+        "fr": "Arme ou désarme l'alarme. Un refus (porte restée ouverte) est un résultat, pas un échec.",
+        "de": "Schaltet die Alarmanlage scharf oder unscharf. Eine Ablehnung (Tür offen gelassen) ist ein Ergebnis, kein Fehler.",
+        "es": "Arma o desarma la alarma. Un rechazo (puerta abierta) es un resultado, no un fallo."
       },
       "timeout_seconds": 120,
       "fields": [
@@ -538,7 +678,9 @@
           "source": "devices",
           "label": {
             "en": "Alarm (empty: the only one)",
-            "fr": "Alarme (vide : la seule du compte)"
+            "fr": "Alarme (vide : la seule du compte)",
+            "de": "Alarmanlage (leer: die einzige)",
+            "es": "Alarma (vacío: la única)"
           },
           "required": false
         },
@@ -547,7 +689,9 @@
           "type": "select",
           "label": {
             "en": "Mode",
-            "fr": "Mode"
+            "fr": "Mode",
+            "de": "Modus",
+            "es": "Modo"
           },
           "required": true,
           "options": [
@@ -555,56 +699,72 @@
               "value": "disarmed",
               "label": {
                 "en": "Disarmed",
-                "fr": "Désarmée"
+                "fr": "Désarmée",
+                "de": "Unscharf",
+                "es": "Desarmada"
               }
             },
             {
               "value": "armed_home",
               "label": {
                 "en": "Partial (day)",
-                "fr": "Partielle (jour)"
+                "fr": "Partielle (jour)",
+                "de": "Teilscharf (Tag)",
+                "es": "Parcial (día)"
               }
             },
             {
               "value": "armed_night",
               "label": {
                 "en": "Partial (night)",
-                "fr": "Partielle (nuit)"
+                "fr": "Partielle (nuit)",
+                "de": "Teilscharf (Nacht)",
+                "es": "Parcial (noche)"
               }
             },
             {
               "value": "armed_away",
               "label": {
                 "en": "Total",
-                "fr": "Totale"
+                "fr": "Totale",
+                "de": "Vollscharf",
+                "es": "Total"
               }
             },
             {
               "value": "perimeter",
               "label": {
                 "en": "Perimeter only",
-                "fr": "Périmétrique seule"
+                "fr": "Périmétrique seule",
+                "de": "Nur Perimeter",
+                "es": "Solo perimetral"
               }
             },
             {
               "value": "armed_home_perimeter",
               "label": {
                 "en": "Partial (day) + perimeter",
-                "fr": "Partielle (jour) + périm."
+                "fr": "Partielle (jour) + périm.",
+                "de": "Teilscharf (Tag) + Perimeter",
+                "es": "Parcial (día) + perimetral"
               }
             },
             {
               "value": "armed_night_perimeter",
               "label": {
                 "en": "Partial (night) + perimeter",
-                "fr": "Partielle (nuit) + périm."
+                "fr": "Partielle (nuit) + périm.",
+                "de": "Teilscharf (Nacht) + Perimeter",
+                "es": "Parcial (noche) + perimetral"
               }
             },
             {
               "value": "armed_away_perimeter",
               "label": {
                 "en": "Total + perimeter",
-                "fr": "Totale + périmétrique"
+                "fr": "Totale + périmétrique",
+                "de": "Vollscharf + Perimeter",
+                "es": "Total + perimetral"
               }
             }
           ]
@@ -614,7 +774,9 @@
           "type": "boolean",
           "label": {
             "en": "Arm even with a door or window open",
-            "fr": "Armer même avec une porte ou fenêtre ouverte"
+            "fr": "Armer même avec une porte ou fenêtre ouverte",
+            "de": "Auch bei offener Tür oder offenem Fenster scharf schalten",
+            "es": "Armar aunque haya una puerta o ventana abierta"
           },
           "required": false,
           "default": false
@@ -626,7 +788,9 @@
           "type": "boolean",
           "label": {
             "en": "Done",
-            "fr": "Effectué"
+            "fr": "Effectué",
+            "de": "Ausgeführt",
+            "es": "Realizado"
           }
         },
         {
@@ -634,7 +798,9 @@
           "type": "string",
           "label": {
             "en": "Alarm mode",
-            "fr": "Mode de l'alarme"
+            "fr": "Mode de l'alarme",
+            "de": "Alarmmodus",
+            "es": "Modo de la alarma"
           }
         },
         {
@@ -642,7 +808,9 @@
           "type": "string",
           "label": {
             "en": "Reason of a refusal",
-            "fr": "Raison d'un refus"
+            "fr": "Raison d'un refus",
+            "de": "Grund einer Ablehnung",
+            "es": "Motivo de un rechazo"
           }
         }
       ]
@@ -651,11 +819,15 @@
       "key": "refresh_alarm",
       "label": {
         "en": "Read the Verisure alarm now",
-        "fr": "Lire l'alarme Verisure maintenant"
+        "fr": "Lire l'alarme Verisure maintenant",
+        "de": "Verisure-Alarmanlage jetzt abfragen",
+        "es": "Leer ahora la alarma Verisure"
       },
       "description": {
         "en": "Ask the alarm its real state instead of waiting for the next refresh.",
-        "fr": "Demande son état réel à l'alarme au lieu d'attendre le prochain rafraîchissement."
+        "fr": "Demande son état réel à l'alarme au lieu d'attendre le prochain rafraîchissement.",
+        "de": "Fragt die Alarmanlage nach ihrem tatsächlichen Zustand, statt auf die nächste Aktualisierung zu warten.",
+        "es": "Pide a la alarma su estado real en lugar de esperar a la próxima actualización."
       },
       "timeout_seconds": 120,
       "fields": [
@@ -665,7 +837,9 @@
           "source": "devices",
           "label": {
             "en": "Alarm (empty: the only one)",
-            "fr": "Alarme (vide : la seule du compte)"
+            "fr": "Alarme (vide : la seule du compte)",
+            "de": "Alarmanlage (leer: die einzige)",
+            "es": "Alarma (vacío: la única)"
           },
           "required": false
         }
@@ -676,7 +850,9 @@
           "type": "string",
           "label": {
             "en": "Alarm mode",
-            "fr": "Mode de l'alarme"
+            "fr": "Mode de l'alarme",
+            "de": "Alarmmodus",
+            "es": "Modo de la alarma"
           }
         }
       ]
@@ -687,11 +863,15 @@
       "key": "alarm",
       "label": {
         "en": "Verisure alarm",
-        "fr": "Alarme Verisure"
+        "fr": "Alarme Verisure",
+        "de": "Verisure-Alarmanlage",
+        "es": "Alarma Verisure"
       },
       "description": {
         "en": "Alarm mode, last change, open doors and windows, buttons to arm.",
-        "fr": "Mode de l'alarme, dernier changement, ouvrants ouverts, boutons pour armer."
+        "fr": "Mode de l'alarme, dernier changement, ouvrants ouverts, boutons pour armer.",
+        "de": "Alarmmodus, letzte Änderung, offene Türen und Fenster, Tasten zum Scharfschalten.",
+        "es": "Modo de la alarma, último cambio, puertas y ventanas abiertas, botones para armar."
       },
       "icon": "shield",
       "action_timeout_seconds": 120,
@@ -702,7 +882,9 @@
           "source": "devices",
           "label": {
             "en": "Alarm (empty: the only one)",
-            "fr": "Alarme (vide : la seule du compte)"
+            "fr": "Alarme (vide : la seule du compte)",
+            "de": "Alarmanlage (leer: die einzige)",
+            "es": "Alarma (vacío: la única)"
           },
           "required": false
         },
@@ -711,7 +893,9 @@
           "type": "boolean",
           "label": {
             "en": "Show a Disarm button (anyone seeing the dashboard can use it)",
-            "fr": "Afficher un bouton Désarmer (toute personne voyant le tableau de bord peut l'utiliser)"
+            "fr": "Afficher un bouton Désarmer (toute personne voyant le tableau de bord peut l'utiliser)",
+            "de": "Taste „Unscharf schalten“ anzeigen (jeder, der das Dashboard sieht, kann sie benutzen)",
+            "es": "Mostrar un botón Desarmar (cualquiera que vea el panel puede usarlo)"
           },
           "required": false,
           "default": false

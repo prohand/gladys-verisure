@@ -61,7 +61,8 @@ src/actions.js           Configuration screen buttons: test, send code, validate
 src/store.js             the session file in /data (0600)
 src/config.js            DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
 gladys-assistant-integration.json   manifest
-docs/en.md, docs/fr.md   user documentation, re-hosted by Gladys (mandatory)
+docs/{en,fr,de,es}.md    user documentation, re-hosted by Gladys (en, fr mandatory)
+src/i18n.js              the languages of user-facing texts, `textsOf` / `localize`
 test/                    node --test; fake Verisure clouds (test/helpers/fakeFetch.js),
                          fake client (test/helpers/fakeClient.js), fake Gladys of the SDK
 ```
@@ -96,12 +97,13 @@ platformId(installation, label))`. Same for every key users store: manifest
 - **Changelog.** Every user-visible change adds a line under `## [Unreleased]`
   in `CHANGELOG.md` (`### Added`, `Changed`, `Fixed`, `Removed`, `Security`).
   Never write a version heading: the Release workflow does it.
-- **Manifest.** Texts are `{ "en": ..., "fr": ... }` objects (label,
+- **Manifest.** Texts are `{ "en", "fr", "de", "es" }` objects (label,
   description, placeholder). The catalog description holds 10 to 100
   characters per language. `test/manifest.test.js` ties the manifest to the
   code (defaults, handlers, triggers, mode options): change both sides together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, widget content, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** is `{ en, fr, de, es }` (English, French, German,
+  Spanish): action messages, manifest texts, widget content, and `docs/en.md`,
+  `docs/fr.md`, `docs/de.md`, `docs/es.md`, kept in sync.
   Strings Gladys stores as plain text (device names, select labels) follow the
   account: French for OWA France, English otherwise (`src/devices/helpers.js`).
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,

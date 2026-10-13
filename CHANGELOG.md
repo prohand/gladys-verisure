@@ -10,6 +10,11 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Added
+
+- German and Spanish translations (configuration screen, messages, widgets,
+  documentation).
+
 ## [1.0.1] - 2026-10-13
 
 ### Added

@@ -10,6 +10,7 @@ import { readFile } from 'node:fs/promises';
 import { ACTIONS } from '../src/actions.js';
 import { DEFAULT_CONFIG, OWA_COUNTRIES, PLATFORMS } from '../src/config.js';
 import { SCENE_TRIGGER_KEYS } from '../src/events.js';
+import { LANGUAGES } from '../src/i18n.js';
 import { STATUS } from '../src/hub.js';
 import { SCENE_ACTIONS } from '../src/scenes.js';
 import { MODE_ORDER } from '../src/verisure/modes.js';
@@ -127,7 +128,9 @@ test('section fields are purely presentational', () => {
     assert.equal(section.default, undefined);
     assert.equal(section.placeholder, undefined);
     assert.ok(!(section.key in DEFAULT_CONFIG));
-    assert.ok(section.description.en.length <= 1000 && section.description.fr.length <= 1000);
+    for (const language of LANGUAGES) {
+      assert.ok(section.description[language].length <= 1000, `section ${language}`);
+    }
     for (const link of section.links ?? []) {
       assert.match(link.url, /^https:\/\//);
     }
@@ -141,11 +144,29 @@ test('dynamic selects declare a source and no static options', () => {
   }
 });
 
-test('every text is a multi-language object with English and French', () => {
+test('every text is a multi-language object in English, French, German and Spanish', () => {
   for (const [path, value] of texts(manifest)) {
-    assert.equal(typeof value, 'object', `${path} must be { en, fr }`);
-    assert.ok(value.en, `${path}.en`);
-    assert.ok(value.fr, `${path}.fr`);
+    assert.equal(typeof value, 'object', `${path} must be { en, fr, de, es }`);
+    for (const language of LANGUAGES) {
+      assert.ok(value[language], `${path}.${language}`);
+    }
+  }
+});
+
+test('the catalog description is written in every language', () => {
+  assert.deepEqual(Object.keys(manifest.description).sort(), [...LANGUAGES].sort());
+});
+
+test('widget labels and descriptions fit the store bounds in every language', () => {
+  for (const widget of manifest.widgets) {
+    for (const language of LANGUAGES) {
+      const label = widget.label[language];
+      assert.ok(label.length >= 3 && label.length <= 30, `${widget.key} label.${language}`);
+      assert.ok(
+        widget.description[language].length <= 100,
+        `${widget.key} description.${language}`,
+      );
+    }
   }
 });
 

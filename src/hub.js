@@ -47,22 +47,32 @@ export const STATUS_MESSAGES = {
   [STATUS.NOT_CONFIGURED]: {
     en: 'Enter your Verisure username and password.',
     fr: 'Renseignez votre identifiant et votre mot de passe Verisure.',
+    de: 'Geben Sie Ihren Verisure-Benutzernamen und Ihr Passwort ein.',
+    es: 'Introduzca su usuario y su contraseña de Verisure.',
   },
   [STATUS.MFA_REQUIRED]: {
     en: 'Verisure asks for a verification code: click "Send a code", then "Validate the code".',
     fr: 'Verisure demande un code de vérification : cliquez sur « Envoyer un code », puis « Valider le code ».',
+    de: 'Verisure verlangt einen Bestätigungscode: Klicken Sie auf „Code senden“ und dann auf „Code bestätigen“.',
+    es: 'Verisure pide un código de verificación: pulse «Enviar un código» y después «Validar el código».',
   },
   [STATUS.AUTH_FAILED]: {
     en: 'Verisure refused the username or the password.',
     fr: "Verisure a refusé l'identifiant ou le mot de passe.",
+    de: 'Verisure hat den Benutzernamen oder das Passwort abgelehnt.',
+    es: 'Verisure ha rechazado el usuario o la contraseña.',
   },
   [STATUS.RATE_LIMITED]: {
     en: 'Verisure limits the requests for now: the integration waits before trying again.',
     fr: "Verisure limite les requêtes pour l'instant : l'intégration patiente avant de réessayer.",
+    de: 'Verisure begrenzt die Anfragen derzeit: Die Integration wartet, bevor sie es erneut versucht.',
+    es: 'Verisure limita las solicitudes por ahora: la integración espera antes de volver a intentarlo.',
   },
   [STATUS.UNREACHABLE]: {
     en: 'The Verisure cloud does not answer, see the integration logs.',
     fr: "Le cloud Verisure ne répond pas, consultez les logs de l'intégration.",
+    de: 'Die Verisure-Cloud antwortet nicht, sehen Sie in den Logs der Integration nach.',
+    es: 'La nube de Verisure no responde, consulte los registros de la integración.',
   },
 };
 
