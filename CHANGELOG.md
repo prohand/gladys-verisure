@@ -10,6 +10,10 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-23
+
+- Maintenance release, no functional change.
+
 ## [1.1.0] - 2026-10-13
 
 ### Added
@@ -49,6 +53,7 @@ the notes of the version's GitHub Release.
   checks), Release workflow, GitHub Releases and Dependabot.
 - `SECURITY.md`, `CLAUDE.md` and the user documentation in English and French.
 
-[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/prohand/gladys-verisure/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/prohand/gladys-verisure/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/prohand/gladys-verisure/releases/tag/v1.0.1
