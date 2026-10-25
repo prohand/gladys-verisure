@@ -19,6 +19,8 @@ aplicación que utiliza:
 
 ## Configuración
 
+La integración requiere **Gladys 5.3.0 o posterior**.
+
 1. Abra la pestaña **Configuración** de la integración.
 2. Elija su **aplicación Verisure** y, para My Verisure, su **país**.
 3. Escriba el **usuario** y la **contraseña** de su aplicación.

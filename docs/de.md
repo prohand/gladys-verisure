@@ -20,6 +20,8 @@ Wähle die der App, die du verwendest:
 
 ## Konfiguration
 
+Die Integration benötigt **Gladys 5.3.0 oder neuer**.
+
 1. Öffne den Tab **Konfiguration** der Integration.
 2. Wähle deine **Verisure-App** und, bei My Verisure, dein **Land**.
 3. Gib den **Benutzernamen** und das **Passwort** deiner App ein.

@@ -20,7 +20,7 @@ User documentation: [English](docs/en.md) · [Français](docs/fr.md) · [Deutsch
 | Login               | Username + password, SMS code the first time                           | Username + password, SMS/e-mail code the first time, alarm code to arm |
 | Gladys capabilities | Scene triggers, scene actions, dashboard widget, cloud transport badge | Scene triggers, scene actions, dashboard widget, cloud transport badge |
 
-On top of the devices (Gladys 5.1+):
+Requires **Gladys 5.3.0 or later**. On top of the devices:
 
 | Capability                                                      | Manifest key          | Code                               |
 | --------------------------------------------------------------- | --------------------- | ---------------------------------- |

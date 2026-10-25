@@ -10,6 +10,16 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Added
+
+- Search keywords in the Gladys catalog (Securitas Direct, My Verisure, smart
+  lock, Sentinel...).
+
+### Changed
+
+- Gladys 5.3.0 or later is now required.
+- Gladys integration SDK 0.16.
+
 ## [1.1.1] - 2026-10-23
 
 - Maintenance release, no functional change.
