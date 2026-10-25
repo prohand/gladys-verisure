@@ -20,6 +20,8 @@ Choisissez celui de l'application que vous utilisez :
 
 ## Configuration
 
+L'intégration nécessite **Gladys 5.3.0 ou plus récent**.
+
 1. Ouvrez l'onglet **Configuration** de l'intégration.
 2. Choisissez votre **application Verisure** et, pour My Verisure, votre
    **pays**.
