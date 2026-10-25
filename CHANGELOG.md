@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-25
+
 ### Added
 
 - Search keywords in the Gladys catalog (Securitas Direct, My Verisure, smart
@@ -63,7 +65,8 @@ the notes of the version's GitHub Release.
   checks), Release workflow, GitHub Releases and Dependabot.
 - `SECURITY.md`, `CLAUDE.md` and the user documentation in English and French.
 
-[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/prohand/gladys-verisure/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/prohand/gladys-verisure/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/prohand/gladys-verisure/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/prohand/gladys-verisure/releases/tag/v1.0.1
