@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-11-07
+
 ### Changed
 
 - My Verisure: the detailed logs show the zones the cloud reports (name, type,
@@ -70,7 +72,8 @@ the notes of the version's GitHub Release.
   checks), Release workflow, GitHub Releases and Dependabot.
 - `SECURITY.md`, `CLAUDE.md` and the user documentation in English and French.
 
-[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/prohand/gladys-verisure/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/prohand/gladys-verisure/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/prohand/gladys-verisure/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/prohand/gladys-verisure/compare/v1.0.1...v1.1.0
