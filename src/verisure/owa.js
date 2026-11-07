@@ -739,6 +739,7 @@ export function createOwaClient(options) {
       const data = await call('Status', { numinst: installation.id }, installation);
       const status = data?.xSStatus ?? {};
       rememberProtom(installation, status.status);
+      logger.debug(`Status ${status.status ?? '?'}, zones: ${describeZones(status.exceptions)}`);
       const services = installations.get(installation.id)?.services ?? [];
       const climates = services.some(
         (service) => COMFORT_SERVICES.has(service.request) && service.active,
@@ -861,4 +862,20 @@ export function createOwaClient(options) {
 function toNumber(value) {
   const number = Number(value);
   return value === null || value === undefined || !Number.isFinite(number) ? null : number;
+}
+
+// The zones xSStatus lists in `exceptions` (name, device type, state), for the
+// detailed logs only. Nothing is built from them yet: testers' logs will tell
+// whether the cloud follows a door opening live or only at arming time, which
+// decides if My Verisure can get door/window sensors. Zone names only, no secret.
+export function describeZones(exceptions) {
+  if (!Array.isArray(exceptions)) {
+    return 'not provided';
+  }
+  if (exceptions.length === 0) {
+    return 'none';
+  }
+  return exceptions
+    .map((zone) => `${zone?.alias ?? '?'} (${zone?.deviceType ?? '?'}, ${zone?.status ?? '?'})`)
+    .join(', ');
 }

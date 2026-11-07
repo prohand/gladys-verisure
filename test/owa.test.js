@@ -1,6 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { API_URLS, createOwaClient, planOrders, PROTO_TO_MODE } from '../src/verisure/owa.js';
+import {
+  API_URLS,
+  createOwaClient,
+  describeZones,
+  planOrders,
+  PROTO_TO_MODE,
+} from '../src/verisure/owa.js';
 import {
   ArmingRefusedError,
   AuthenticationError,
@@ -463,4 +469,42 @@ test('a session the server declares dead is reopened once', async (t) => {
   const state = await client().fetchState(INSTALLATION);
   assert.equal(state.alarm.mode, MODES.DISARMED);
   assert.equal(calls.filter((call) => call.body.operationName === 'Srv').length, 2);
+});
+
+test('the detailed logs show the zones xSStatus reports, to study door/window sensors', async (t) => {
+  const previous = process.env.LOG_LEVEL;
+  process.env.LOG_LEVEL = 'debug';
+  t.after(() => {
+    if (previous === undefined) delete process.env.LOG_LEVEL;
+    else process.env.LOG_LEVEL = previous;
+  });
+  const lines = [];
+  t.mock.method(console, 'log', (...args) => lines.push(args.join(' ')));
+  fakeFetch(
+    t,
+    cloud({
+      Status: () => ({
+        json: {
+          data: {
+            xSStatus: {
+              status: 'D',
+              exceptions: [{ alias: 'Fenetre salon', deviceType: 'MG', status: 'OPEN' }],
+            },
+          },
+        },
+      }),
+    }),
+  );
+  await client().fetchState(INSTALLATION);
+  assert.ok(
+    lines.some((line) => line.includes('Status D, zones: Fenetre salon (MG, OPEN)')),
+    lines.join('\n'),
+  );
+});
+
+test('describeZones tells a missing list from an empty one', () => {
+  assert.equal(describeZones(undefined), 'not provided');
+  assert.equal(describeZones(null), 'not provided');
+  assert.equal(describeZones([]), 'none');
+  assert.equal(describeZones([{ alias: 'Porte' }, {}]), 'Porte (?, ?), ? (?, ?)');
 });

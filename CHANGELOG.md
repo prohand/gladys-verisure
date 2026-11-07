@@ -10,6 +10,11 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Changed
+
+- My Verisure: the detailed logs show the zones the cloud reports (name, type,
+  state), to study door/window sensors with testers.
+
 ## [1.2.0] - 2026-10-25
 
 ### Added
