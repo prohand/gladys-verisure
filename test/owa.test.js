@@ -5,6 +5,7 @@ import {
   choosePhone,
   createOwaClient,
   describeZones,
+  normalizeActivity,
   planOrders,
   PROTO_TO_MODE,
 } from '../src/verisure/owa.js';
@@ -73,6 +74,25 @@ function cloud(overrides = {}) {
       case 'Status':
         return {
           json: { data: { xSStatus: { status: 'P', timestampUpdate: '2026-10-13T07:00:00Z' } } },
+        };
+      case 'ActV2Timeline':
+        return {
+          json: {
+            data: {
+              xSActV2: {
+                reg: [
+                  { idSignal: '100', type: 2, alias: 'Armement', time: '2026-11-16 20:00:00' },
+                  {
+                    idSignal: '101',
+                    type: 13,
+                    alias: 'Alarme',
+                    time: '2026-11-16 21:00:00',
+                    deviceName: 'Salon',
+                  },
+                ],
+              },
+            },
+          },
         };
       case 'Sentinel':
         return {
@@ -357,7 +377,7 @@ test('fetchState reads the status without waking the panel, plus the comfort sen
   assert.equal(state.alarm.raw, 'P');
   assert.deepEqual(state.climates, [{ id: '5', name: 'Salon', temperature: 21, humidity: 47 }]);
   const operations = calls.map((call) => call.body.operationName);
-  assert.deepEqual(operations, ['mkLoginToken', 'Srv', 'Status', 'Sentinel']);
+  assert.deepEqual(operations, ['mkLoginToken', 'Srv', 'Status', 'Sentinel', 'ActV2Timeline']);
   const status = calls[2];
   assert.equal(status.headers.numinst, '1234567');
   assert.equal(status.headers.panel, 'SDVFAST');
@@ -574,4 +594,56 @@ test('describeZones tells a missing list from an empty one', () => {
   assert.equal(describeZones(null), 'not provided');
   assert.equal(describeZones([]), 'none');
   assert.equal(describeZones([{ alias: 'Porte' }, {}]), 'Porte (?, ?), ? (?, ?)');
+});
+
+test('fetchState reads the event log, newest first, alarms tagged with their kind', async (t) => {
+  const { calls } = fakeFetch(t, cloud());
+  const state = await client().fetchState(INSTALLATION);
+  assert.deepEqual(state.alarmEvents, [
+    {
+      id: '101',
+      time: '2026-11-16 21:00:00',
+      code: '13',
+      kind: 'intrusion',
+      label: 'Alarme',
+      zone: 'Salon',
+    },
+    {
+      id: '100',
+      time: '2026-11-16 20:00:00',
+      code: '2',
+      kind: null,
+      label: 'Armement',
+      zone: null,
+    },
+  ]);
+  const activity = calls.find((call) => call.body.operationName === 'ActV2Timeline');
+  assert.equal(activity.body.variables.numinst, '1234567');
+  assert.equal(activity.body.variables.panel, 'SDVFAST');
+  assert.equal(activity.body.variables.timeFilter, 'LASTMONTH');
+});
+
+test('an event log that keeps failing is no longer asked, the rest still reads', async (t) => {
+  const { calls } = fakeFetch(
+    t,
+    cloud({ ActV2Timeline: () => ({ json: { errors: [{ message: 'nope' }], data: null } }) }),
+  );
+  const verisure = client();
+  for (let i = 0; i < 5; i += 1) {
+    const state = await verisure.fetchState(INSTALLATION);
+    assert.equal(state.alarmEvents, null);
+    assert.equal(state.alarm.mode, MODES.ARMED_HOME);
+  }
+  assert.equal(calls.filter((call) => call.body.operationName === 'ActV2Timeline').length, 3);
+});
+
+test('a rate limit on the event log stops the whole read', async (t) => {
+  fakeFetch(t, cloud({ ActV2Timeline: () => ({ status: 429, text: 'slow down' }) }));
+  await assert.rejects(client().fetchState(INSTALLATION), RateLimitError);
+});
+
+test('normalizeActivity drops rows without id and copes with no list', () => {
+  assert.deepEqual(normalizeActivity(undefined), []);
+  assert.deepEqual(normalizeActivity([{ type: 13 }]), []);
+  assert.equal(normalizeActivity([{ idSignal: 7, type: '241' }])[0].kind, 'tampering');
 });

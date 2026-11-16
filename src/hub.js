@@ -160,6 +160,11 @@ export function createHub(options) {
     for (const installation of installations) {
       const next = await client.fetchState(installation);
       const previous = snapshots.get(installation.id);
+      // Event log not read this time: keep the last one as the baseline, so
+      // an alarm that happened meanwhile still fires at the next good read.
+      if (!Array.isArray(next.alarmEvents) && Array.isArray(previous?.alarmEvents)) {
+        next.alarmEvents = previous.alarmEvents;
+      }
       snapshots.set(installation.id, next);
       modes.set(installation.id, client.supportedModes(installation));
       await options.onEvents?.(installation, previous, next);

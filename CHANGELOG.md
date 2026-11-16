@@ -10,6 +10,15 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Added
+
+- New scene trigger "Verisure alarm triggered": a new alarm (intrusion, fire,
+  panic button, water leak, tampering) in the Verisure event log, even when
+  the alarm mode does not change. Read at each refresh. My Verisure: one more
+  request per refresh (the activity log), asked no more after 3 failures in a
+  row. The detailed logs show every new log entry and its code, to complete
+  the list of alarm types.
+
 ## [1.2.5] - 2026-11-16
 
 ### Fixed

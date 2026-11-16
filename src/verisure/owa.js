@@ -74,6 +74,22 @@ const USER_AGENT =
 const AUTH_OPERATIONS = new Set(['mkLoginToken', 'RefreshLogin', 'mkSendOTP', 'mkValidateDevice']);
 const EMPTY_HASH_OPERATIONS = new Set(['mkValidateDevice', 'RefreshLogin', 'mkSendOTP']);
 
+// The event log (xSActV2): the newest rows only, enough for one refresh.
+const ACTIVITY_ROWS = 15;
+// An event log that keeps failing is not asked again until the next start:
+// one useless call per refresh is one more reason for the WAF to block us.
+const ACTIVITY_MAX_FAILURES = 3;
+
+// The event types of the log that are an alarm, by the Gladys `kind` they
+// fire (codes seen on real panels, from the Home Assistant integration).
+// Unknown types fire nothing: the detailed logs show them, to extend the list.
+export const ACTIVITY_KINDS = {
+  13: 'intrusion',
+  14: 'intrusion', // photo-detector alarm
+  24: 'tampering',
+  241: 'tampering', // sabotage
+};
+
 const POLL_DELAY_MS = 2000;
 const POLL_TIMEOUT_MS = 90_000;
 
@@ -108,6 +124,8 @@ export const QUERIES = {
     'query DisarmStatus($numinst: String!, $panel: String!, $referenceId: String!, $counter: Int!, $request: DisarmCodeRequest) { xSDisarmStatus(numinst: $numinst, panel: $panel, referenceId: $referenceId, counter: $counter, request: $request) { res msg status protomResponse protomResponseDate numinst requestId error { code type allowForcing exceptionsNumber referenceId } } }',
   xSGetExceptions:
     'query xSGetExceptions($numinst: String!, $panel: String!, $referenceId: String!, $counter: Int!, $suid: String) { xSGetExceptions(numinst: $numinst, panel: $panel, referenceId: $referenceId, counter: $counter, suid: $suid) { res msg exceptions { status deviceType alias } } }',
+  ActV2Timeline:
+    'query ActV2Timeline($numinst: String!, $panel: String, $numRows: Int, $offset: Int, $timeFilter: TimeFilter!) { xSActV2(numinst: $numinst, input: { timeFilter: $timeFilter, numRows: $numRows, offset: $offset, panel: $panel, hasLocksmithRequested: false, singleActivityFilter: [0] }) { reg { alias type device idSignal time signalType deviceName } } }',
   Sentinel:
     'query Sentinel($numinst: String!) { xSComfort(numinst: $numinst) { res devices { alias status { temperature humidity airQualityCode } zone } } }',
 };
@@ -269,6 +287,7 @@ export function createOwaClient(options) {
   let pendingOtpHash = null; // challenge received, code not typed yet
   let mfaPending = false;
   const installations = new Map(); // numinst -> { capabilities, expiresAt, caps, services, partitions, protom }
+  const activityFailures = new Map(); // numinst -> consecutive failures of the event log
 
   const generateId = () => {
     const now = new Date();
@@ -779,6 +798,7 @@ export function createOwaClient(options) {
       )
         ? await readComfort(installation)
         : [];
+      const alarmEvents = await readActivity(installation);
       return {
         alarm: {
           mode: PROTO_TO_MODE[status.status] ?? UNKNOWN_MODE,
@@ -791,6 +811,7 @@ export function createOwaClient(options) {
         climates,
         smartPlugs: [],
         locks: [],
+        alarmEvents,
       };
     },
 
@@ -890,6 +911,61 @@ export function createOwaClient(options) {
       return [];
     }
   }
+
+  // The newest rows of the event log, or null when it cannot be read.
+  async function readActivity(installation) {
+    const failures = activityFailures.get(installation.id) ?? 0;
+    if (failures >= ACTIVITY_MAX_FAILURES) {
+      return null;
+    }
+    try {
+      const data = await call(
+        'ActV2Timeline',
+        {
+          numinst: installation.id,
+          panel: installation.panel,
+          numRows: ACTIVITY_ROWS,
+          offset: 0,
+          timeFilter: 'LASTMONTH',
+        },
+        installation,
+      );
+      activityFailures.delete(installation.id);
+      return normalizeActivity(data?.xSActV2?.reg);
+    } catch (err) {
+      if (err instanceof RateLimitError || err instanceof AuthenticationError) {
+        throw err;
+      }
+      activityFailures.set(installation.id, failures + 1);
+      if (failures + 1 >= ACTIVITY_MAX_FAILURES) {
+        logger.info(`Event log unavailable (${err.message}): not asked again until a restart`);
+      } else {
+        logger.debug(`Event log unavailable: ${err.message}`);
+      }
+      return null;
+    }
+  }
+}
+
+/**
+ * The xSActV2 rows as the hub keeps them, newest first. The panel time
+ * (`YYYY-MM-DD HH:MM:SS`) sorts as text.
+ */
+export function normalizeActivity(rows) {
+  if (!Array.isArray(rows)) {
+    return [];
+  }
+  return rows
+    .filter((row) => row?.idSignal)
+    .map((row) => ({
+      id: String(row.idSignal),
+      time: row.time ?? null,
+      code: String(row.type ?? ''),
+      kind: ACTIVITY_KINDS[row.type] ?? null,
+      label: row.alias || null,
+      zone: row.deviceName || null,
+    }))
+    .sort((a, b) => String(b.time ?? '').localeCompare(String(a.time ?? '')));
 }
 
 function toNumber(value) {

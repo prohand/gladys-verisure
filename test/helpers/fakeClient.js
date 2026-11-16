@@ -15,6 +15,7 @@ export function createFakeClient(overrides = {}) {
     climates: [{ id: 'CL1', name: 'Salon', temperature: 20.5, humidity: 48 }],
     smartPlugs: [{ id: 'SP1', name: 'Lampe', on: false }],
     locks: [{ id: 'LK1', name: 'Porte', locked: true, doorOpen: false }],
+    alarmEvents: [],
     modes: [MODES.DISARMED, MODES.ARMED_HOME, MODES.ARMED_AWAY],
     mfa: false,
     fail: null,
@@ -71,6 +72,7 @@ export function createFakeClient(overrides = {}) {
         climates: state.climates,
         smartPlugs: state.smartPlugs,
         locks: state.locks,
+        alarmEvents: state.alarmEvents,
       });
     },
     async checkAlarm() {

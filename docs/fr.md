@@ -100,6 +100,19 @@ récent), dans la catégorie **Intégrations**.
 - **La connexion à Verisure est perdue** : Verisure ne répond plus, refuse la
   connexion, limite les requêtes ou demande un nouveau code. Idéal pour vous
   envoyer un message.
+- **L'alarme Verisure s'est déclenchée** : une nouvelle alarme apparaît dans le
+  journal d'événements Verisure, même si le mode de l'alarme ne change pas.
+  Filtrez sur l'alarme et sur le type : `intrusion`, `fire` (incendie), `sos`
+  (bouton panique), `water` (fuite d'eau), `tampering` (sabotage). Les actions
+  suivantes peuvent lire `{{triggerEvent.data.kind}}`,
+  `{{triggerEvent.data.zone}}` (le détecteur, quand Verisure le dit),
+  `{{triggerEvent.data.label}}` (le texte de Verisure) et
+  `{{triggerEvent.data.time}}`. Le journal est lu à chaque rafraîchissement :
+  comptez jusqu'à l'**Intervalle de rafraîchissement** (2 minutes par défaut)
+  de délai. Ce n'est pas une sirène : la télésurveillance Verisure reste le
+  premier secours. My Verisure donne `intrusion` et `tampering` ; l'application
+  Verisure donne `intrusion`, `fire`, `sos` et `water`. Une alarme survenue
+  pendant que Gladys était arrêtée ne déclenche rien au redémarrage.
 
 Les valeurs des modes : `disarmed`, `armed_home` (partielle jour),
 `armed_night` (partielle nuit), `armed_away` (totale), `perimeter`,

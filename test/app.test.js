@@ -89,6 +89,37 @@ test('a mode changed at the keypad fires alarm_mode_changed, a Gladys order does
   ]);
 });
 
+test('an alarm in the event log fires alarm_triggered, even with the mode unchanged', async (t) => {
+  const { gladys, app, client } = await start(t);
+  const alarm = alarmOf(gladys);
+  const intrusion = {
+    id: '9',
+    time: '2026-11-16 21:00:00',
+    code: '13',
+    kind: 'intrusion',
+    label: 'Alarme',
+    zone: 'Salon',
+  };
+  // A read that misses the log keeps the baseline: the alarm still fires after.
+  client.state.alarmEvents = null;
+  await app.hub.refreshNow();
+  client.state.alarmEvents = [intrusion];
+  await app.hub.refreshNow();
+  await app.hub.refreshNow();
+  assert.deepEqual(gladys.fake.sceneEvents, [
+    {
+      key: TRIGGERS.ALARM_TRIGGERED,
+      data: {
+        device: alarm.external_id,
+        kind: 'intrusion',
+        zone: 'Salon',
+        label: 'Alarme',
+        time: '2026-11-16 21:00:00',
+      },
+    },
+  ]);
+});
+
 test('a lost connection fires connection_lost once and turns the badges off', async (t) => {
   const { gladys, app, client } = await start(t);
   client.state.fail = new VerisureError('down');
