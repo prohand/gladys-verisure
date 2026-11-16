@@ -320,7 +320,26 @@
         "de": "Code senden",
         "es": "Enviar un código"
       },
-      "timeout_seconds": 30
+      "timeout_seconds": 30,
+      "fields": [
+        {
+          "key": "phone",
+          "type": "string",
+          "label": {
+            "en": "Phone (if several numbers)",
+            "fr": "Téléphone (si plusieurs numéros)",
+            "de": "Telefon (bei mehreren Nummern)",
+            "es": "Teléfono (si hay varios números)"
+          },
+          "placeholder": {
+            "en": "e.g. 2 or 45",
+            "fr": "ex. 2 ou 45",
+            "de": "z. B. 2 oder 45",
+            "es": "p. ej. 2 o 45"
+          },
+          "required": false
+        }
+      ]
     },
     {
       "key": "validate_code",

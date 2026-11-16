@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   API_URLS,
+  choosePhone,
   createOwaClient,
   describeZones,
   planOrders,
@@ -260,6 +261,72 @@ test('a wrong code is refused', async (t) => {
   const verisure = client();
   await verisure.requestCode();
   await assert.rejects(verisure.validateCode('000000'), AuthenticationError);
+});
+
+test('several phones: no SMS until the user picks one', async (t) => {
+  const { calls } = fakeFetch(
+    t,
+    cloud({
+      mkValidateDevice: () => ({
+        json: {
+          errors: [
+            {
+              message: 'Unauthorized',
+              data: {
+                'auth-otp-hash': 'otp-hash-1',
+                'auth-phones': [
+                  { id: 7, phone: '*******789' },
+                  { id: 8, phone: '*******245' },
+                  { id: 9, phone: '*******312' },
+                ],
+              },
+            },
+          ],
+          data: null,
+        },
+      }),
+      mkSendOTP: (call) => {
+        assert.deepEqual(call.body.variables, { recordId: 8, otpHash: 'otp-hash-1' });
+        return { json: { data: { xSSendOtp: { res: 'OK' } } } };
+      },
+    }),
+  );
+  const verisure = client();
+  const sent = () => calls.filter((call) => call.body.operationName === 'mkSendOTP').length;
+  assert.deepEqual(await verisure.requestCode(), {
+    channel: 'choose',
+    phones: ['*******789', '*******245', '*******312'],
+  });
+  assert.deepEqual(await verisure.requestCode({ phone: '12345' }), {
+    channel: 'choose',
+    phones: ['*******789', '*******245', '*******312'],
+  });
+  assert.equal(sent(), 0, 'no code goes to a number the user did not pick');
+  await assert.rejects(verisure.validateCode('123456'), (err) => err.code === 'NO_CHALLENGE');
+  assert.deepEqual(await verisure.requestCode({ phone: '2' }), {
+    channel: 'sms',
+    destination: '*******245',
+  });
+  assert.equal(sent(), 1);
+});
+
+test('choosePhone: one number, a position, or the last digits', () => {
+  const one = [{ id: 1, phone: '***11' }];
+  const three = [
+    { id: 1, phone: '*******789' },
+    { id: 2, phone: '*******245' },
+    { id: 3, phone: '*******312' },
+  ];
+  assert.equal(choosePhone(one), one[0]);
+  assert.equal(choosePhone(one, '9'), one[0]);
+  assert.equal(choosePhone(three), null);
+  assert.equal(choosePhone(three, ' '), null);
+  assert.equal(choosePhone(three, '3'), three[2]);
+  assert.equal(choosePhone(three, '4'), null, 'out of the list, and no number ends with 4');
+  assert.equal(choosePhone(three, '45'), three[1]);
+  assert.equal(choosePhone(three, '312'), three[2]);
+  assert.equal(choosePhone(three, '2'), three[1], 'a position before last digits');
+  assert.equal(choosePhone([...three, { id: 4, phone: '*******145' }], '45'), null, 'ambiguous');
 });
 
 test('validate_code before send_code explains what to do', async () => {

@@ -293,9 +293,9 @@ export function createHub(options) {
       });
     },
 
-    async requestCode() {
+    async requestCode(options) {
       const verisure = requireClient();
-      return serialize(() => verisure.requestCode());
+      return serialize(() => verisure.requestCode(options));
     },
 
     async validateCode(code) {

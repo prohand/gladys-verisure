@@ -10,6 +10,13 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Fixed
+
+- My Verisure: with several phone numbers on the account, "Send a code" no
+  longer sends the code to the first one. It lists the masked numbers and
+  waits for the user to pick one in the new "Phone" field (position or last
+  digits).
+
 ## [1.2.4] - 2026-11-16
 
 - Maintenance release, no functional change.
