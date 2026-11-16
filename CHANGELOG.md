@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.2.5] - 2026-11-16
+
 ### Fixed
 
 - My Verisure: with several phone numbers on the account, "Send a code" no
@@ -91,7 +93,8 @@ the notes of the version's GitHub Release.
   checks), Release workflow, GitHub Releases and Dependabot.
 - `SECURITY.md`, `CLAUDE.md` and the user documentation in English and French.
 
-[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.2.4...HEAD
+[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.2.5...HEAD
+[1.2.5]: https://github.com/prohand/gladys-verisure/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/prohand/gladys-verisure/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/prohand/gladys-verisure/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/prohand/gladys-verisure/compare/v1.2.1...v1.2.2
