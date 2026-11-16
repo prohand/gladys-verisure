@@ -139,6 +139,22 @@ test('the code steps: test, send, validate', async (t) => {
   assert.equal(gladys.fake.discoveredDevices.length, 5);
 });
 
+test('send_code with several phones lists them, then sends to the chosen one', async (t) => {
+  const client = createFakeClient({ mfa: true, phones: ['*******789', '*******245'] });
+  const { gladys } = await start(t, { client });
+  const listed = await gladys.fake.action('send_code');
+  assert.match(listed.data.message.fr, /plusieurs numéros.*1\) \*+789, 2\) \*+245/);
+  assert.match(listed.data.message.en, /Send a code/);
+  const wrong = await gladys.fake.action('send_code', { phone: '77' });
+  assert.match(wrong.data.message.fr, /« 77 »/);
+  const sent = await gladys.fake.action('send_code', { phone: ' 2 ' });
+  assert.match(sent.data.message.fr, /SMS \(\*+245\)/);
+  assert.deepEqual(client.calls.filter(([name]) => name === 'requestCode').at(-1), [
+    'requestCode',
+    { phone: '2' },
+  ]);
+});
+
 test('a malformed code is refused before reaching Verisure', async (t) => {
   const { gladys, client } = await start(t);
   const ack = await gladys.fake.action('validate_code', { code: 'abc' });

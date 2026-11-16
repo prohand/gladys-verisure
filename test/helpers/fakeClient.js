@@ -5,6 +5,7 @@
 
 import { ArmingRefusedError, MfaRequiredError } from '../../src/verisure/errors.js';
 import { MODES } from '../../src/verisure/modes.js';
+import { choosePhone } from '../../src/verisure/owa.js';
 
 export function createFakeClient(overrides = {}) {
   const state = {
@@ -31,8 +32,15 @@ export function createFakeClient(overrides = {}) {
         throw new MfaRequiredError();
       }
     },
-    async requestCode() {
-      calls.push(['requestCode']);
+    async requestCode(options) {
+      calls.push(['requestCode', options]);
+      if (state.phones) {
+        const phones = state.phones.map((phone, id) => ({ id, phone }));
+        const chosen = choosePhone(phones, options?.phone);
+        return chosen
+          ? { channel: 'sms', destination: chosen.phone }
+          : { channel: 'choose', phones: state.phones };
+      }
       return { channel: 'sms', destination: '******789' };
     },
     async validateCode(code) {

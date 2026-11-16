@@ -75,9 +75,36 @@ export const ACTIONS = {
     }
   },
 
-  async send_code(gladys, { hub }) {
+  async send_code(gladys, { fields = {}, hub }) {
     try {
-      const { channel, destination } = await hub.requestCode();
+      const phone = String(fields.phone ?? '')
+        .trim()
+        .slice(0, 20);
+      const { channel, destination, phones } = await hub.requestCode(phone ? { phone } : {});
+      if (channel === 'choose') {
+        // Nothing sent: the user picks the number, then clicks again.
+        const list = phones.map((item, index) => `${index + 1}) ${item}`).join(', ');
+        const intro = phone
+          ? {
+              en: `"${phone}" matches no single number of this account: `,
+              fr: `« ${phone} » ne désigne aucun numéro unique de ce compte : `,
+              de: `„${phone}“ passt zu keiner eindeutigen Nummer dieses Kontos: `,
+              es: `«${phone}» no corresponde a un único número de esta cuenta: `,
+            }
+          : {
+              en: 'This account has several phone numbers, no code sent yet: ',
+              fr: "Ce compte a plusieurs numéros, aucun code n'est encore envoyé : ",
+              de: 'Dieses Konto hat mehrere Telefonnummern, noch kein Code gesendet: ',
+              es: 'Esta cuenta tiene varios números, todavía no se ha enviado ningún código: ',
+            };
+        const next = {
+          en: '. Type its position (1, 2...) or its last digits in "Phone", then click "Send a code" again.',
+          fr: '. Saisissez sa position (1, 2…) ou ses derniers chiffres dans « Téléphone », puis cliquez à nouveau sur « Envoyer un code ».',
+          de: '. Gib ihre Position (1, 2 …) oder ihre letzten Ziffern unter „Telefon“ ein und klicke erneut auf „Code senden“.',
+          es: '. Escriba su posición (1, 2…) o sus últimas cifras en «Teléfono» y pulse de nuevo «Enviar un código».',
+        };
+        return textsOf((language) => `${intro[language]}${list}${next[language]}`);
+      }
       if (channel === 'none') {
         await hub.refreshNow({ forceInstallations: true });
         return {

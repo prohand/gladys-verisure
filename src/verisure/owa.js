@@ -203,6 +203,32 @@ export function planOrders(current, target, hasPerimeter) {
 }
 
 /** A 16-hex-character device id, like the app generates. */
+/**
+ * The phone to send the code to, among the masked numbers of the challenge.
+ * One number: that one. Several: the user's choice, either its position in
+ * the list (1, 2...) or the digits it ends with; `null` until it designates
+ * exactly one, so that the action lists the numbers instead of guessing.
+ */
+export function choosePhone(phones, choice) {
+  if (phones.length === 1) {
+    return phones[0];
+  }
+  const typed = String(choice ?? '').replace(/\D/g, '');
+  if (!typed) {
+    return null;
+  }
+  const position = Number(typed);
+  if (typed.length <= 2 && position >= 1 && position <= phones.length) {
+    return phones[position - 1];
+  }
+  const matching = phones.filter((item) =>
+    String(item.phone ?? '')
+      .replace(/\D/g, '')
+      .endsWith(typed),
+  );
+  return matching.length === 1 ? matching[0] : null;
+}
+
 const newDeviceId = () => randomBytes(8).toString('hex');
 
 /**
@@ -641,7 +667,8 @@ export function createOwaClient(options) {
       await ensureAuth();
     },
 
-    async requestCode() {
+    /** `choice`: the phone the user picked, its position (1, 2...) or its last digits. */
+    async requestCode({ phone: choice } = {}) {
       const json = await send('mkValidateDevice', {
         idDevice: session.deviceId,
         idDeviceIndigitall: session.indigitall,
@@ -665,12 +692,18 @@ export function createOwaClient(options) {
       if (phones.length === 0) {
         throw new VerisureError('No phone number on this Verisure account');
       }
+      // Several numbers on the account (family members): never pick one for
+      // the user, the code would go to someone else's phone.
+      const phone = choosePhone(phones, choice);
+      if (!phone) {
+        return { channel: 'choose', phones: phones.map((item) => item.phone) };
+      }
       pendingOtpHash = challenge['auth-otp-hash'];
-      const sent = await send('mkSendOTP', { recordId: phones[0].id, otpHash: pendingOtpHash });
+      const sent = await send('mkSendOTP', { recordId: phone.id, otpHash: pendingOtpHash });
       if (sent?.data?.xSSendOtp?.res !== 'OK') {
         throw new VerisureError(firstError(sent)?.message ?? 'Verisure could not send the code');
       }
-      return { channel: 'sms', destination: phones[0].phone };
+      return { channel: 'sms', destination: phone.phone };
     },
 
     async validateCode(code) {
