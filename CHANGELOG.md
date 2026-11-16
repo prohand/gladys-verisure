@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-16
+
 ### Added
 
 - New scene trigger "Verisure alarm triggered": a new alarm (intrusion, fire,
@@ -102,7 +104,8 @@ the notes of the version's GitHub Release.
   checks), Release workflow, GitHub Releases and Dependabot.
 - `SECURITY.md`, `CLAUDE.md` and the user documentation in English and French.
 
-[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.2.5...HEAD
+[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/prohand/gladys-verisure/compare/v1.2.5...v1.3.0
 [1.2.5]: https://github.com/prohand/gladys-verisure/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/prohand/gladys-verisure/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/prohand/gladys-verisure/compare/v1.2.2...v1.2.3
