@@ -17,7 +17,7 @@ import {
 } from './devices/index.js';
 import { alarmIds } from './devices/alarm.js';
 import { doorWindowIds } from './devices/doorWindow.js';
-import { diffSnapshots, TRIGGERS } from './events.js';
+import { diffSnapshots, newAlarmEvents, TRIGGERS } from './events.js';
 import { createHub, STATUS, STATUS_MESSAGES } from './hub.js';
 import { applyLogLevel } from './logging.js';
 import { SCENE_ACTIONS } from './scenes.js';
@@ -100,6 +100,14 @@ export function createApp(gladys, options = {}) {
         alarmId: alarmIds(gladys, installation).device,
         doorWindowId: (itemId) => doorWindowIds(gladys, installation, itemId).device,
       };
+      // Every new entry of the event log, alarm or not: testers' detailed logs
+      // tell which codes the trigger still misses. Code and text only.
+      for (const entry of newAlarmEvents(previous?.alarmEvents, next.alarmEvents)) {
+        logger.debug(
+          `Event log: ${entry.code ?? '?'} "${entry.label ?? ''}" at ${entry.time ?? '?'}` +
+            ` -> ${entry.kind ?? 'not an alarm'}`,
+        );
+      }
       for (const event of diffSnapshots(ids, previous, next)) {
         logger.info(`Scene event ${event.key}`);
         await safely(`scene event ${event.key}`, () =>

@@ -103,6 +103,19 @@ neuer), unter der Kategorie **Integrationen**.
 - **Die Verbindung zu Verisure ist unterbrochen**: Verisure antwortet nicht
   mehr, verweigert die Anmeldung, drosselt die Anfragen oder verlangt einen
   neuen Code. Ideal, um sich selbst eine Nachricht zu senden.
+- **Verisure-Alarm ausgelöst**: Ein neuer Alarm erscheint im
+  Verisure-Ereignisprotokoll, auch wenn sich der Modus der Alarmanlage nicht
+  ändert. Filter auf die Alarmanlage und den Typ: `intrusion` (Einbruch),
+  `fire` (Feuer), `sos` (Paniktaste), `water` (Wasserleck), `tampering`
+  (Sabotage). Die folgenden Aktionen können `{{triggerEvent.data.kind}}`,
+  `{{triggerEvent.data.zone}}` (der Melder, wenn Verisure ihn nennt),
+  `{{triggerEvent.data.label}}` (der Text von Verisure) und
+  `{{triggerEvent.data.time}}` lesen. Das Protokoll wird bei jeder
+  Aktualisierung gelesen: Rechne mit einer Verzögerung bis zum
+  **Aktualisierungsintervall** (standardmäßig 2 Minuten). Es ist keine Sirene:
+  Die Verisure-Überwachung bleibt die erste Hilfe. My Verisure liefert `intrusion` und `tampering`; die Verisure-App
+  liefert `intrusion`, `fire`, `sos` und `water`. Ein Alarm, der auftrat,
+  während Gladys gestoppt war, löst beim Neustart nichts aus.
 
 Die Werte der Modi: `disarmed`, `armed_home` (teilscharf Tag), `armed_night`
 (teilscharf Nacht), `armed_away` (vollscharf), `perimeter`,

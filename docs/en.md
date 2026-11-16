@@ -96,6 +96,18 @@ under the **Integrations** category.
 - **The Verisure connection is lost**: Verisure stopped answering, refused the
   login, throttles the requests or asks for a new code. Ideal to send yourself
   a message.
+- **Verisure alarm triggered**: a new alarm shows up in the Verisure event log,
+  even when the alarm mode does not change. Filter on the alarm and the type:
+  `intrusion`, `fire`, `sos` (panic button), `water` (water leak), `tampering`.
+  The following actions can read `{{triggerEvent.data.kind}}`,
+  `{{triggerEvent.data.zone}}` (the detector, when Verisure tells),
+  `{{triggerEvent.data.label}}` (Verisure's text) and
+  `{{triggerEvent.data.time}}`. The log is read at each refresh: expect a delay
+  of up to the **refresh interval** (2 minutes by default). It is not a siren:
+  the Verisure monitoring stays the first line. My Verisure gives `intrusion`
+  and `tampering`; the Verisure app gives `intrusion`, `fire`, `sos` and
+  `water`. An alarm that happened while Gladys was stopped fires nothing at the
+  restart.
 
 The mode values: `disarmed`, `armed_home` (partial day), `armed_night` (partial
 night), `armed_away` (total), `perimeter`, `armed_home_perimeter`,

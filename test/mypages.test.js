@@ -46,6 +46,24 @@ const OVERVIEW = {
       doorState: 'CLOSE',
     },
   ],
+  eventLog: {
+    pagedList: [
+      {
+        eventId: 'E1',
+        eventTime: '2026-11-16T19:00:00.000Z',
+        eventCategory: 'FIRE',
+        eventType: 'FA',
+        device: { deviceLabel: 'SM1', area: 'Kitchen' },
+      },
+      {
+        eventId: 'E2',
+        eventTime: '2026-11-16T20:00:00.000Z',
+        eventCategory: 'INTRUSION',
+        eventType: 'BA',
+        device: { deviceLabel: '3KCR TP3W', area: 'Entrance' },
+      },
+    ],
+  },
 };
 
 // A Verisure cloud that logs in at once and answers the overview.
@@ -143,9 +161,12 @@ test('fetchState reads the whole installation in one request', async (t) => {
   assert.equal(graphql.length, 1);
   assert.deepEqual(
     graphql[0].body.map((op) => op.operationName),
-    ['ArmState', 'DoorWindow', 'Climate', 'SmartPlug', 'SmartLock'],
+    ['ArmState', 'DoorWindow', 'Climate', 'SmartPlug', 'SmartLock', 'EventLog'],
   );
   assert.ok(graphql[0].body.every((op) => op.variables.giid === INSTALLATION.id));
+  const eventLog = graphql[0].body.find((op) => op.operationName === 'EventLog');
+  assert.deepEqual(eventLog.variables.eventCategories, ['INTRUSION', 'FIRE', 'SOS', 'WATER']);
+  assert.equal(eventLog.variables.offset, 0);
 });
 
 test('a step-up answer asks for a code; send_code and validate_code trust the device', async (t) => {
@@ -335,4 +356,27 @@ test('smart plugs and locks are driven by their device label', async (t) => {
   assert.deepEqual(plug.body.variables, { giid: INSTALLATION.id, deviceLabel: 'SP1', state: true });
   const lockCall = calls.find((call) => call.body?.operationName === 'DoorLock');
   assert.deepEqual(lockCall.body.variables.input, { code: '1234' });
+});
+
+test('normalizeState reads the event log newest first, an absent one as not read', () => {
+  assert.deepEqual(normalizeState(OVERVIEW).alarmEvents, [
+    {
+      id: 'E2',
+      time: '2026-11-16T20:00:00.000Z',
+      code: 'INTRUSION',
+      kind: 'intrusion',
+      label: 'BA',
+      zone: 'Entrance',
+    },
+    {
+      id: 'E1',
+      time: '2026-11-16T19:00:00.000Z',
+      code: 'FIRE',
+      kind: 'fire',
+      label: 'FA',
+      zone: 'Kitchen',
+    },
+  ]);
+  assert.equal(normalizeState({}).alarmEvents, null);
+  assert.deepEqual(normalizeState({ eventLog: { pagedList: [] } }).alarmEvents, []);
 });

@@ -76,6 +76,8 @@ const QUERIES = {
     'query SmartPlug($giid: String!) { installation(giid: $giid) { smartplugs { device { deviceLabel area } currentState icon isHazardous } } }',
   smartLocks:
     'query SmartLock($giid: String!) { installation(giid: $giid) { smartLocks { lockStatus doorState lockMethod eventTime device { deviceLabel area } } } }',
+  eventLog:
+    'query EventLog($giid: String!, $offset: Int!, $pagesize: Int!, $eventCategories: [String], $fromDate: String, $toDate: String, $eventContactIds: [String], $eventDeviceLabels: [String]) { installation(giid: $giid) { eventLog(offset: $offset, pagesize: $pagesize, eventCategories: $eventCategories, eventContactIds: $eventContactIds, eventDeviceLabels: $eventDeviceLabels, fromDate: $fromDate, toDate: $toDate) { pagedList { device { deviceLabel area } eventType eventCategory eventId eventTime } } } }',
   armAway:
     'mutation armAway($giid: String!, $code: String!, $forceArm: Boolean) { armStateArmAway(giid: $giid, code: $code, forceArm: $forceArm) }',
   armHome:
@@ -91,6 +93,28 @@ const QUERIES = {
     'mutation DoorUnlock($giid: String!, $deviceLabel: String!, $input: LockDoorInput!) { DoorUnlock(giid: $giid, deviceLabel: $deviceLabel, input: $input) }',
   pollLockState:
     'query pollLockState($giid: String!, $transactionId: String, $deviceLabel: String!, $futureState: DoorLockState!) { installation(giid: $giid) { doorLockStateChangePollResult(transactionId: $transactionId, deviceLabel: $deviceLabel, futureState: $futureState) { result createTime } } }',
+};
+
+// The event log categories that are an alarm, by the Gladys `kind` they fire.
+// Only these are asked for: the log stays short and every row is an alarm.
+export const EVENT_KINDS = {
+  INTRUSION: 'intrusion',
+  FIRE: 'fire',
+  SOS: 'sos',
+  WATER: 'water',
+};
+
+// The variables a batched query needs besides the installation.
+const BATCH_VARIABLES = {
+  eventLog: {
+    offset: 0,
+    pagesize: 15,
+    eventCategories: Object.keys(EVENT_KINDS),
+    eventContactIds: [],
+    eventDeviceLabels: [],
+    fromDate: null,
+    toDate: null,
+  },
 };
 
 // The GraphQL body of an operation: its name must be the one its document
@@ -255,7 +279,9 @@ export function createMyPagesClient(options) {
   // not support (no lock, no plug) answers an error, which empties its part
   // instead of failing the whole read.
   async function batch(giid, names) {
-    const json = await graphql(names.map((name) => gqlBody(name, { giid })));
+    const json = await graphql(
+      names.map((name) => gqlBody(name, { giid, ...BATCH_VARIABLES[name] })),
+    );
     const results = Array.isArray(json) ? json : [json];
     const installation = {};
     results.forEach((result, index) => {
@@ -371,6 +397,7 @@ export function createMyPagesClient(options) {
         'climate',
         'smartPlugs',
         'smartLocks',
+        'eventLog',
       ]);
       return normalizeState(data);
     },
@@ -508,6 +535,20 @@ export function normalizeState(installation) {
         locked: item.lockStatus === 'LOCKED',
         doorOpen: item.doorState === 'OPEN',
       })),
+    // Not in the answer (query refused): null, "not read", never "empty".
+    alarmEvents: Array.isArray(installation.eventLog?.pagedList)
+      ? installation.eventLog.pagedList
+          .filter((item) => item?.eventId)
+          .map((item) => ({
+            id: String(item.eventId),
+            time: item.eventTime ?? null,
+            code: item.eventCategory ?? null,
+            kind: EVENT_KINDS[item.eventCategory] ?? null,
+            label: item.eventType ?? null,
+            zone: item.device?.area || item.device?.deviceLabel || null,
+          }))
+          .sort((a, b) => String(b.time ?? '').localeCompare(String(a.time ?? '')))
+      : null,
   };
 }
 

@@ -9,7 +9,10 @@
 //     sets the mode when the mode changes would otherwise loop;
 //   - door_window_changed: a door/window detector opened or closed;
 //   - connection_lost: the Verisure cloud stopped answering, or wants a new
-//     verification code.
+//     verification code;
+//   - alarm_triggered: a new alarm entry (intrusion, fire, panic, water,
+//     tampering) in the installation's event log. The alarm mode does not
+//     change during a break-in, so it needs its own source: the log.
 // Keys and data keys are stored in users' scenes: never rename them.
 // -----------------------------------------------------------------------------
 
@@ -17,7 +20,11 @@ export const TRIGGERS = {
   ALARM_MODE_CHANGED: 'alarm_mode_changed',
   DOOR_WINDOW_CHANGED: 'door_window_changed',
   CONNECTION_LOST: 'connection_lost',
+  ALARM_TRIGGERED: 'alarm_triggered',
 };
+
+/** The kinds of alarm_triggered (manifest field `kind`), stored in users' scenes. */
+export const ALARM_KINDS = ['intrusion', 'fire', 'sos', 'water', 'tampering'];
 
 /** Every trigger the code fires (checked against the manifest by the tests). */
 export const SCENE_TRIGGER_KEYS = Object.values(TRIGGERS);
@@ -62,5 +69,45 @@ export function diffSnapshots(ids, previous, next) {
       });
     }
   }
+  for (const entry of newAlarmEvents(previous.alarmEvents, next.alarmEvents)) {
+    if (!entry.kind) {
+      continue;
+    }
+    events.push({
+      key: TRIGGERS.ALARM_TRIGGERED,
+      data: {
+        device: ids.alarmId,
+        kind: entry.kind,
+        zone: entry.zone ?? null,
+        label: entry.label ?? null,
+        time: entry.time ?? null,
+      },
+    });
+  }
   return events;
+}
+
+/**
+ * The entries of the event log that arrived since the previous read: the head
+ * of the list (newest first) down to the first entry already seen. An entry
+ * that shows up at the tail (the window sliding, a row deleted upstream) is
+ * old news and never fires. `null` is "not read": no baseline, nothing new.
+ * @param {object[] | null | undefined} before
+ * @param {object[] | null | undefined} after
+ * @returns {object[]}
+ */
+export function newAlarmEvents(before, after) {
+  if (!Array.isArray(before) || !Array.isArray(after)) {
+    return [];
+  }
+  const seen = new Set(before.map((entry) => entry.id));
+  const fresh = [];
+  for (const entry of after) {
+    if (seen.has(entry.id)) {
+      break;
+    }
+    fresh.push(entry);
+  }
+  // Oldest first: the scenes run in the order things happened.
+  return fresh.reverse();
 }

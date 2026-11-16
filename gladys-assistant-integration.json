@@ -684,6 +684,134 @@
           }
         }
       ]
+    },
+    {
+      "key": "alarm_triggered",
+      "label": {
+        "en": "Verisure alarm triggered",
+        "fr": "L'alarme Verisure s'est déclenchée",
+        "de": "Verisure-Alarm ausgelöst",
+        "es": "La alarma Verisure ha saltado"
+      },
+      "description": {
+        "en": "A new alarm in the Verisure event log (intrusion, fire, panic button, water, tampering). Seen at the next refresh.",
+        "fr": "Une nouvelle alarme dans le journal Verisure (intrusion, incendie, bouton panique, eau, sabotage). Vue au rafraîchissement suivant.",
+        "de": "Ein neuer Alarm im Verisure-Ereignisprotokoll (Einbruch, Feuer, Paniktaste, Wasser, Sabotage). Bei der nächsten Aktualisierung erkannt.",
+        "es": "Una nueva alarma en el registro de Verisure (intrusión, incendio, botón de pánico, agua, sabotaje). Vista en la siguiente lectura."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Alarm",
+            "fr": "Alarme",
+            "de": "Alarmanlage",
+            "es": "Alarma"
+          },
+          "required": false
+        },
+        {
+          "key": "kind",
+          "type": "multi_select",
+          "label": {
+            "en": "Alarm type",
+            "fr": "Type d'alarme",
+            "de": "Alarmtyp",
+            "es": "Tipo de alarma"
+          },
+          "options": [
+            {
+              "value": "intrusion",
+              "label": {
+                "en": "Intrusion",
+                "fr": "Intrusion",
+                "de": "Einbruch",
+                "es": "Intrusión"
+              }
+            },
+            {
+              "value": "fire",
+              "label": {
+                "en": "Fire",
+                "fr": "Incendie",
+                "de": "Feuer",
+                "es": "Incendio"
+              }
+            },
+            {
+              "value": "sos",
+              "label": {
+                "en": "Panic button (SOS)",
+                "fr": "Bouton panique (SOS)",
+                "de": "Paniktaste (SOS)",
+                "es": "Botón de pánico (SOS)"
+              }
+            },
+            {
+              "value": "water",
+              "label": {
+                "en": "Water leak",
+                "fr": "Fuite d'eau",
+                "de": "Wasserleck",
+                "es": "Fuga de agua"
+              }
+            },
+            {
+              "value": "tampering",
+              "label": {
+                "en": "Tampering",
+                "fr": "Sabotage",
+                "de": "Sabotage",
+                "es": "Sabotaje"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "kind",
+          "type": "string",
+          "label": {
+            "en": "Alarm type",
+            "fr": "Type d'alarme",
+            "de": "Alarmtyp",
+            "es": "Tipo de alarma"
+          }
+        },
+        {
+          "key": "zone",
+          "type": "string",
+          "label": {
+            "en": "Zone",
+            "fr": "Zone",
+            "de": "Zone",
+            "es": "Zona"
+          }
+        },
+        {
+          "key": "label",
+          "type": "string",
+          "label": {
+            "en": "Verisure text",
+            "fr": "Texte Verisure",
+            "de": "Verisure-Text",
+            "es": "Texto de Verisure"
+          }
+        },
+        {
+          "key": "time",
+          "type": "string",
+          "label": {
+            "en": "Time",
+            "fr": "Heure",
+            "de": "Uhrzeit",
+            "es": "Hora"
+          }
+        }
+      ]
     }
   ],
   "scene_actions": [

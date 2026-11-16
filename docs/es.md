@@ -100,6 +100,19 @@ posterior), en la categoría **Integraciones**.
 - **Se ha perdido la conexión con Verisure**: Verisure ya no responde, rechaza
   el inicio de sesión, limita las solicitudes o pide un nuevo código. Ideal
   para enviarse un mensaje.
+- **La alarma Verisure ha saltado**: aparece una nueva alarma en el registro de
+  eventos de Verisure, aunque el modo de la alarma no cambie. Filtre por la
+  alarma y el tipo: `intrusion` (intrusión), `fire` (incendio), `sos` (botón de
+  pánico), `water` (fuga de agua), `tampering` (sabotaje). Las acciones
+  siguientes pueden leer `{{triggerEvent.data.kind}}`,
+  `{{triggerEvent.data.zone}}` (el detector, cuando Verisure lo indica),
+  `{{triggerEvent.data.label}}` (el texto de Verisure) y
+  `{{triggerEvent.data.time}}`. El registro se lee en cada actualización:
+  cuente con un retraso de hasta el **intervalo de actualización** (2 minutos
+  por defecto). No es una sirena: la televigilancia de Verisure sigue siendo
+  la primera ayuda. My Verisure da `intrusion` y `tampering`; la aplicación
+  Verisure da `intrusion`, `fire`, `sos` y `water`. Una alarma ocurrida
+  mientras Gladys estaba parado no activa nada al reiniciar.
 
 Los valores de los modos: `disarmed`, `armed_home` (parcial día),
 `armed_night` (parcial noche), `armed_away` (total), `perimeter`,
