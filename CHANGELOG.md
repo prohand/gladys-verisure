@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-17
+
 ### Fixed
 
 - A new verification code was asked at every restart when Gladys had created
@@ -120,7 +122,8 @@ the notes of the version's GitHub Release.
   checks), Release workflow, GitHub Releases and Dependabot.
 - `SECURITY.md`, `CLAUDE.md` and the user documentation in English and French.
 
-[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/prohand/gladys-verisure/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/prohand/gladys-verisure/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/prohand/gladys-verisure/compare/v1.2.5...v1.3.0
 [1.2.5]: https://github.com/prohand/gladys-verisure/compare/v1.2.4...v1.2.5
 [1.2.4]: https://github.com/prohand/gladys-verisure/compare/v1.2.3...v1.2.4
