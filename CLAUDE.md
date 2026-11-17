@@ -77,7 +77,9 @@ test/                    node --test; fake Verisure clouds (test/helpers/fakeFet
   login.
 - **Secrets.** The password, the alarm code, cookies, the hash, the refresh
   token, OTP codes and phone numbers are never logged. Only the session
-  (never the password) is written, to `/data/verisure-session.json`, mode 0600.
+  (never the password) is written, to `/data/verisure-session.json`, mode 0600;
+  when `/data` is not writable (root-owned by older Gladys), to the hidden
+  config key `session_backup` instead (`src/store.js`).
 - **The OWA device identity is forever.** `deviceId` / `uuid` / `indigitall`
   are validated once by SMS: changing them asks the user for a new code.
 - **External ids are forever.** Built with `gladys.externalIds(type,

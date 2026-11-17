@@ -58,7 +58,11 @@ unofficial nature of the Verisure API this integration uses.
   configuration; they are never written to `/data` nor logged.
 - The session file in `/data` is readable by the container user only (mode
   `0600`) and holds what spares a new SMS code at each restart: cookies, refresh
-  token and the identifiers of this "device" for Verisure.
+  token and the identifiers of this "device" for Verisure. Only when Gladys
+  made `/data` read-only for the container (older Gladys versions), the session
+  goes to a hidden key of the integration's Gladys configuration
+  (`session_backup`, next to the password Gladys already keeps), emptied as
+  soon as `/data` is writable again or the session is forgotten.
 - The **Forget the session** button logs out from Verisure and deletes that
   file.
 - The dashboard widget never shows a **Disarm** button unless its own settings

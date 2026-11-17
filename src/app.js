@@ -21,7 +21,7 @@ import { diffSnapshots, newAlarmEvents, TRIGGERS } from './events.js';
 import { createHub, STATUS, STATUS_MESSAGES } from './hub.js';
 import { applyLogLevel } from './logging.js';
 import { SCENE_ACTIONS } from './scenes.js';
-import { createSessionStore } from './store.js';
+import { createSessionStore, DEFAULT_DATA_DIR, SESSION_BACKUP_KEY } from './store.js';
 import { WIDGETS, refreshWidgets } from './widgets.js';
 
 const logger = createLogger({ name: 'app' });
@@ -33,10 +33,15 @@ const HEARTBEAT_MS = 30 * 60 * 1000;
 /**
  * Register every handler on `gladys` (before connect()).
  * @param {import('@gladysassistant/integration-sdk').GladysIntegration} gladys
- * @param {{ store?: object, createClient?: Function, clientOverrides?: object }} [options]
+ * @param {{ store?: object, dataDir?: string | null, createClient?: Function,
+ *   clientOverrides?: object }} [options]
  */
 export function createApp(gladys, options = {}) {
-  const store = options.store ?? createSessionStore();
+  const store =
+    options.store ??
+    createSessionStore(options.dataDir === undefined ? DEFAULT_DATA_DIR : options.dataDir, {
+      backup: { save: (text) => gladys.setConfig({ [SESSION_BACKUP_KEY]: text }) },
+    });
   let publishedSignature = null;
 
   // A Gladys call that fails (disconnected, refused) is logged, never fatal to
@@ -171,7 +176,11 @@ export function createApp(gladys, options = {}) {
 
   // --- Configuration -----------------------------------------------------------
   async function applyConfig(raw) {
-    const config = normalizeConfig(raw);
+    // The session backup is not a setting: it goes to the store only, before
+    // hub.configure() creates the client that loads the session.
+    const { [SESSION_BACKUP_KEY]: backup, ...settings } = raw ?? {};
+    store.restore?.(backup);
+    const config = normalizeConfig(settings);
     applyLogLevel(config);
     const changed = hub.configure(config);
     if (changed) {

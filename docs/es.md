@@ -37,13 +37,14 @@ En la primera conexión, Verisure pide validar este nuevo «dispositivo»:
    electrónico);
 2. escriba el código en **Validar el código** y pulse el botón.
 
-My Verisure, cuenta con varios números de teléfono: el primer clic no envía
-nada, muestra la lista de números enmascarados (`1) ******789, 2) ******245…`).
+My Verisure, cuenta con varios números de teléfono: el primer clic, con
+**Teléfono** vacío, no envía nada, muestra la lista de números enmascarados (`1) ******789, 2) ******245…`).
 Escriba la posición del suyo (`2`) o sus últimas cifras (`245`) en
 **Teléfono** y pulse de nuevo **Enviar un código**.
 
 Se hace una sola vez: la sesión se guarda en la carpeta `/data` de la
-integración, un reinicio no pide un nuevo código. Si Verisure vuelve a pedirlo
+integración (en su configuración de Gladys cuando Gladys creó esa carpeta en
+solo lectura), un reinicio no pide un nuevo código. Si Verisure vuelve a pedirlo
 más adelante (contraseña cambiada, sesión caducada), el estado de conexión de
 la pantalla de configuración lo indica, y sus escenas pueden saberlo con el
 desencadenante **Se ha perdido la conexión con Verisure**.

@@ -337,6 +337,12 @@
             "de": "z. B. 2 oder 45",
             "es": "p. ej. 2 o 45"
           },
+          "description": {
+            "en": "Leave it empty the first time: the masked numbers of the account are listed under the button.",
+            "fr": "Laissez vide la première fois : les numéros masqués du compte s'affichent sous le bouton.",
+            "de": "Beim ersten Mal leer lassen: Die maskierten Nummern des Kontos erscheinen unter der Schaltfläche.",
+            "es": "Déjelo vacío la primera vez: los números enmascarados de la cuenta aparecen bajo el botón."
+          },
           "required": false
         }
       ]
