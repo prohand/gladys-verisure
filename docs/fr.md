@@ -39,13 +39,14 @@ L'intégration nécessite **Gladys 5.3.0 ou plus récent**.
    e-mail) ;
 2. saisissez ce code dans **Valider le code**, puis cliquez sur le bouton.
 
-My Verisure, compte avec plusieurs numéros de téléphone : le premier clic
-n'envoie rien, il affiche la liste des numéros masqués (`1) ******789,
+My Verisure, compte avec plusieurs numéros de téléphone : le premier clic,
+**Téléphone** laissé vide, n'envoie rien, il affiche la liste des numéros masqués (`1) ******789,
 2) ******245…`). Saisissez la position du vôtre (`2`) ou ses derniers chiffres
 (`245`) dans **Téléphone**, puis cliquez à nouveau sur **Envoyer un code**.
 
 C'est fait une seule fois : la session est gardée dans le dossier `/data` de
-l'intégration, un redémarrage ne redemande pas de code. Si Verisure en
+l'intégration (dans sa configuration Gladys quand Gladys a créé ce dossier en
+lecture seule), un redémarrage ne redemande pas de code. Si Verisure en
 redemande un plus tard (mot de passe changé, session expirée), l'état de
 connexion de l'écran de configuration le dit, et vos scènes peuvent le savoir
 avec le déclencheur **La connexion à Verisure est perdue**.

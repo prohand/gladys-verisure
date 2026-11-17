@@ -10,6 +10,22 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Fixed
+
+- A new verification code was asked at every restart when Gladys had created
+  the `/data` folder read-only for the integration ("Session kept in memory
+  only (EACCES)" in the logs): My Verisure then saw a new device each time.
+  The session now goes to the integration's Gladys configuration in that case
+  (a hidden value, never shown), and back to `/data` once it is writable. One
+  last code is needed after the update.
+- "Forget the session" no longer fails when `/data` is not writable.
+
+### Changed
+
+- "Send a code": the "Phone" field explains that it stays empty the first
+  time, to list the numbers of the account. The logs say whether a code was
+  sent or a number must be chosen (never the number itself).
+
 ## [1.3.0] - 2026-11-16
 
 ### Added

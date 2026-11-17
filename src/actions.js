@@ -81,6 +81,12 @@ export const ACTIONS = {
         .trim()
         .slice(0, 20);
       const { channel, destination, phones } = await hub.requestCode(phone ? { phone } : {});
+      // Never the number itself: the log says only what happened.
+      logger.info(
+        channel === 'choose'
+          ? `send_code: ${phones.length} phone numbers, none chosen yet, no code sent`
+          : `send_code: ${channel === 'none' ? 'no code needed' : `code sent by ${channel}`}`,
+      );
       if (channel === 'choose') {
         // Nothing sent: the user picks the number, then clicks again.
         const list = phones.map((item, index) => `${index + 1}) ${item}`).join(', ');

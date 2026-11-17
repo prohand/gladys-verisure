@@ -41,6 +41,87 @@ test('without a writable directory, the session lives in memory', () => {
   assert.deepEqual(none.load(), {});
 });
 
+// A directory "inside" a regular file can never be created (ENOTDIR): the
+// same situation as a root-owned /data (EACCES) for the container user.
+function unwritableDir() {
+  const dir = mkdtempSync(join(tmpdir(), 'verisure-'));
+  writeFileSync(join(dir, 'file'), '');
+  return join(dir, 'file', 'data');
+}
+
+const tick = () => new Promise((resolve) => setImmediate(resolve));
+
+test('without a writable /data, the session goes to the Gladys configuration', async () => {
+  const saved = [];
+  const backup = { save: async (text) => saved.push(text) };
+  const store = createSessionStore(unwritableDir(), { backup });
+  store.restore(undefined);
+  assert.deepEqual(store.load(), {});
+  store.save({ account: 'a', session: { deviceId: 'd1' } });
+  store.save({ account: 'a', session: { deviceId: 'd1' } });
+  await tick();
+  assert.equal(saved.length, 1, 'an unchanged session is not sent again');
+  assert.deepEqual(JSON.parse(saved[0]), { account: 'a', session: { deviceId: 'd1' } });
+
+  // Restart: the same device identity, so no new SMS code.
+  const next = createSessionStore(unwritableDir(), { backup });
+  next.restore(saved[0]);
+  assert.equal(next.load().session.deviceId, 'd1');
+
+  next.clear();
+  await tick();
+  assert.equal(saved.at(-1), '', 'forgetting the session empties the backup');
+});
+
+test('once /data is writable again, the session moves back to the file', async () => {
+  const saved = [];
+  const dir = mkdtempSync(join(tmpdir(), 'verisure-'));
+  const store = createSessionStore(dir, { backup: { save: async (text) => saved.push(text) } });
+  store.restore(JSON.stringify({ account: 'a', session: { deviceId: 'd1' } }));
+  assert.equal(store.load().session.deviceId, 'd1', 'the backup is read when no file');
+  store.save({ account: 'a', session: { deviceId: 'd1', refreshToken: 'r' } });
+  await tick();
+  assert.deepEqual(saved, [''], 'the copy in Gladys is emptied');
+  assert.equal(createSessionStore(dir).load().session.refreshToken, 'r');
+});
+
+test('a writable /data never sends the session to Gladys', async () => {
+  const saved = [];
+  const dir = mkdtempSync(join(tmpdir(), 'verisure-'));
+  const store = createSessionStore(dir, { backup: { save: async (text) => saved.push(text) } });
+  store.restore(undefined);
+  store.save({ account: 'a' });
+  store.clear();
+  await tick();
+  assert.deepEqual(saved, []);
+});
+
+test('a backup refused by Gladys is retried at the next save, never thrown', async () => {
+  const saved = [];
+  let refuse = true;
+  const backup = {
+    save: async (text) => {
+      if (refuse) {
+        throw new Error('HTTP 500');
+      }
+      saved.push(text);
+    },
+  };
+  const store = createSessionStore(unwritableDir(), { backup });
+  store.save({ account: 'a' });
+  await tick();
+  refuse = false;
+  store.save({ account: 'a' });
+  await tick();
+  assert.deepEqual(saved, [JSON.stringify({ account: 'a' })]);
+});
+
+test('a broken backup value is ignored', () => {
+  const store = createSessionStore(null, { backup: { save: () => {} } });
+  store.restore('{not json');
+  assert.deepEqual(store.load(), {});
+});
+
 test('a session saved for another account is not reused', () => {
   const config = normalizeConfig({ username: 'Jean@Example.fr', password: 'pw' });
   assert.equal(accountKey(config), 'owa:FR:jean@example.fr');

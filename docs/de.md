@@ -39,13 +39,15 @@ Bei der ersten Verbindung verlangt Verisure, dieses neue „Gerät“ zu bestät
 2. gib den Code unter **Code bestätigen** ein und klicke dann auf die
    Schaltfläche.
 
-My Verisure, Konto mit mehreren Telefonnummern: Der erste Klick sendet nichts,
+My Verisure, Konto mit mehreren Telefonnummern: Der erste Klick, **Telefon**
+leer gelassen, sendet nichts,
 er zeigt die Liste der maskierten Nummern (`1) ******789, 2) ******245 …`).
 Gib die Position deiner Nummer (`2`) oder ihre letzten Ziffern (`245`) unter
 **Telefon** ein und klicke erneut auf **Code senden**.
 
 Das geschieht nur einmal: Die Sitzung wird im Ordner `/data` der Integration
-aufbewahrt, ein Neustart verlangt keinen neuen Code. Fragt Verisure später
+aufbewahrt (in ihrer Gladys-Konfiguration, wenn Gladys diesen Ordner
+schreibgeschützt angelegt hat), ein Neustart verlangt keinen neuen Code. Fragt Verisure später
 erneut (Passwort geändert, Sitzung abgelaufen), zeigt der Verbindungsstatus des
 Konfigurationsbildschirms das an, und deine Szenen erfahren es über den
 Auslöser **Die Verbindung zu Verisure ist unterbrochen**.

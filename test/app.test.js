@@ -5,6 +5,9 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createFakeGladys } from '@gladysassistant/integration-sdk/testing';
 import { createApp } from '../src/app.js';
 import { TRIGGERS } from '../src/events.js';
@@ -219,4 +222,33 @@ test('a scan request re-reads Verisure and re-publishes the devices', async (t) 
   const after = client.calls.filter(([name]) => name === 'listInstallations').length;
   assert.equal(after, before + 1);
   assert.equal(gladys.fake.bodies('POST', '/discovered_device').length, 3);
+});
+
+test('without a writable /data, the OWA device identity survives a restart', async (t) => {
+  // A directory "inside" a regular file: as unwritable as a root-owned /data.
+  const root = mkdtempSync(join(tmpdir(), 'verisure-'));
+  writeFileSync(join(root, 'file'), '');
+  const dataDir = join(root, 'file', 'data');
+  const deviceIds = [];
+  // Like the OWA client: reuse the saved device id, or draw and save one.
+  const createClient = (config, store) => {
+    const deviceId = store.load().session?.deviceId ?? `device-${deviceIds.length + 1}`;
+    deviceIds.push(deviceId);
+    store.save({ account: config.username, session: { deviceId } });
+    return createFakeClient();
+  };
+  const gladys = createFakeGladys({ config: CONFIG });
+  const app = createApp(gladys, { dataDir, createClient });
+  t.after(() => app.stop());
+  await gladys.connect();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(typeof gladys.fake.config.session_backup, 'string');
+  assert.equal(app.hub.config.session_backup, undefined, 'not a setting');
+
+  // The container restarts: Gladys hands the backup back with the config.
+  const again = createFakeGladys({ config: gladys.fake.config });
+  const restarted = createApp(again, { dataDir, createClient });
+  t.after(() => restarted.stop());
+  await again.connect();
+  assert.deepEqual(deviceIds, ['device-1', 'device-1']);
 });

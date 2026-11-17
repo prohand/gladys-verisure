@@ -35,13 +35,14 @@ At the first connection, Verisure asks to validate this new "device":
 1. click **Send a code**: Verisure sends a code by SMS (or e-mail);
 2. type the code in **Validate the code**, then click the button.
 
-My Verisure, account with several phone numbers: the first click sends
-nothing, it shows the list of masked numbers (`1) ******789, 2) ******245...`).
+My Verisure, account with several phone numbers: the first click, **Phone**
+left empty, sends nothing, it shows the list of masked numbers (`1) ******789, 2) ******245...`).
 Type the position of yours (`2`) or its last digits (`245`) in **Phone**, then
 click **Send a code** again.
 
-Done once: the session is kept in the `/data` folder of the integration, a
-restart does not ask for a new code. If Verisure asks again later (password
+Done once: the session is kept in the `/data` folder of the integration (in
+its Gladys configuration when Gladys made that folder read-only), a restart
+does not ask for a new code. If Verisure asks again later (password
 changed, session expired), the connection status of the Configuration screen
 says so, and your scenes can know it with the **The Verisure connection is
 lost** trigger.
